@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, Keyboard, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Keyboard,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -16,6 +22,8 @@ import { BorderRadius, COLORS, FontSizes, Spacing } from '@/constants/theme';
 import AuthService from '@/services/AuthService';
 import { handleFormErrors } from '@/utils/helpers';
 import PhoneCallIcon from '@/assets/icons/phone-call.svg';
+
+import BG_Image from '@/assets/images/splash.png';
 
 export default function VerifyScreen({ navigation }: { navigation: any }) {
   const [loading, setLoading] = useState(false);
@@ -65,60 +73,65 @@ export default function VerifyScreen({ navigation }: { navigation: any }) {
   };
 
   return (
-    <ScreenContainer contentStyle={styles.container} title="REGISTER NOW">
-      <View style={styles.logoContainer}>
-        <View style={styles.circle1}>
-          <View style={styles.circle2}>
-            <PhoneCallIcon width={moderateScale(50)} height={moderateScale(50)} />
+    <ImageBackground style={{ flex: 1 }} resizeMode="cover" source={BG_Image}>
+      <ScreenContainer contentStyle={styles.container} title="REGISTER NOW">
+        <View style={styles.logoContainer}>
+          <View style={styles.circle1}>
+            <View style={styles.circle2}>
+              <PhoneCallIcon
+                width={moderateScale(50)}
+                height={moderateScale(50)}
+              />
+            </View>
+          </View>
+          <AppText style={styles.title}>Verify your phone number</AppText>
+        </View>
+        <View style={styles.formContainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputField
+                onChangeText={onChange}
+                // label={'Email/Phone'}
+                placeholder="Country Code"
+                value={value}
+                keyboardType="phone-pad"
+                error={errors.email?.message}
+              />
+            )}
+            name="email"
+          />
+
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputField
+                onChangeText={onChange}
+                // label={'Password'}
+                placeholder="Phone Number"
+                value={value}
+                keyboardType="phone-pad"
+                error={errors.password?.message}
+              />
+            )}
+            name="password"
+          />
+          <View style={styles.btnsContainer}>
+            <ButtonLarge
+              style={styles.btn}
+              title={'Next'}
+              onPress={() => navigation.navigate('VerifyCode')}
+            />
           </View>
         </View>
-        <AppText style={styles.title}>Verify your phone number</AppText>
-      </View>
-      <View style={styles.formContainer}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Email/Phone'}
-              placeholder="Country Code"
-              value={value}
-              keyboardType="phone-pad"
-              error={errors.email?.message}
-            />
-          )}
-          name="email"
-        />
-
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Password'}
-              placeholder="Phone Number"
-              value={value}
-              keyboardType="phone-pad"
-              error={errors.password?.message}
-            />
-          )}
-          name="password"
-        />
-        <View style={styles.btnsContainer}>
-          <ButtonLarge
-            style={styles.btn}
-            title={'Next'}
-            onPress={() => navigation.navigate('VerifyCode')}
-          />
-        </View>
-      </View>
-    </ScreenContainer>
+      </ScreenContainer>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     // justifyContent: 'center',
     // alignItems: 'center',
     padding: 0,

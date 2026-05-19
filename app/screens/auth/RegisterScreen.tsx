@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, Keyboard, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Keyboard,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -16,6 +22,8 @@ import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
 import { BorderRadius, COLORS, FontSizes, Spacing } from '@/constants/theme';
 import AuthService from '@/services/AuthService';
 import { handleFormErrors } from '@/utils/helpers';
+
+import BG_Image from '@/assets/images/splash.png';
 
 export default function RegisterScreen({ navigation }: { navigation: any }) {
   const [loading, setLoading] = useState(false);
@@ -71,99 +79,101 @@ export default function RegisterScreen({ navigation }: { navigation: any }) {
   };
 
   return (
-    <ScreenContainer contentStyle={styles.container} title="REGISTER NOW">
-      <Logo style={styles.logoContainer} size={150} />
-      <View style={styles.formContainer}>
-        <Row style={{ gap: scale(10), width: '100%' }}>
+    <ImageBackground style={{ flex: 1 }} resizeMode="cover" source={BG_Image}>
+      <ScreenContainer contentStyle={styles.container} title="REGISTER NOW">
+        <Logo style={styles.logoContainer} size={150} />
+        <View style={styles.formContainer}>
+          <Row style={{ gap: scale(10), width: '100%' }}>
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <InputField
+                  onChangeText={onChange}
+                  // label={'Email/Phone'}
+                  placeholder="First Name"
+                  value={value}
+                  error={errors.email?.message}
+                  containerStyle={{ flex: 1 }}
+                />
+              )}
+              name="first_name"
+            />
+            <Controller
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <InputField
+                  onChangeText={onChange}
+                  // label={'Email/Phone'}
+                  placeholder="Last Name"
+                  value={value}
+                  error={errors.email?.message}
+                  containerStyle={{ flex: 1 }}
+                />
+              )}
+              name="last_name"
+            />
+          </Row>
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputField
                 onChangeText={onChange}
                 // label={'Email/Phone'}
-                placeholder="First Name"
+                placeholder="Enter Email/Phone"
                 value={value}
+                keyboardType="email-address"
                 error={errors.email?.message}
-                containerStyle={{ flex: 1 }}
               />
             )}
-            name="first_name"
+            name="email"
           />
+
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputField
+                onChangeText={onChange}
+                // label={'Password'}
+                placeholder="Enter Password"
+                value={value}
+                error={errors.password?.message}
+                isPassword
+              />
+            )}
+            name="password"
+          />
+
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <InputField
                 onChangeText={onChange}
                 // label={'Email/Phone'}
-                placeholder="Last Name"
+                placeholder="Birth_date"
                 value={value}
+                keyboardType="email-address"
                 error={errors.email?.message}
-                containerStyle={{ flex: 1 }}
               />
             )}
-            name="last_name"
+            name="dob"
           />
-        </Row>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Email/Phone'}
-              placeholder="Enter Email/Phone"
-              value={value}
-              keyboardType="email-address"
-              error={errors.email?.message}
-            />
-          )}
-          name="email"
-        />
+        </View>
 
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Password'}
-              placeholder="Enter Password"
-              value={value}
-              error={errors.password?.message}
-              isPassword
-            />
-          )}
-          name="password"
-        />
-
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Email/Phone'}
-              placeholder="Birth_date"
-              value={value}
-              keyboardType="email-address"
-              error={errors.email?.message}
-            />
-          )}
-          name="dob"
-        />
-      </View>
-
-      <View style={styles.btnsContainer}>
-        <ButtonLarge
-          style={styles.btn}
-          title={'Next'}
-          onPress={() => navigation.navigate('Verify')}
-        />
-      </View>
-    </ScreenContainer>
+        <View style={styles.btnsContainer}>
+          <ButtonLarge
+            style={styles.btn}
+            title={'Next'}
+            onPress={() => navigation.navigate('Verify')}
+          />
+        </View>
+      </ScreenContainer>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 0,

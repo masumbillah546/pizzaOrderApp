@@ -15,6 +15,7 @@ import {
   Beef,
   GlassWater,
   Coffee,
+  Home,
 } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
@@ -31,7 +32,7 @@ interface CartItem {
   category: 'food' | 'drink' | 'hot';
 }
 
-const CART_DATA: CartItem[] = [
+export const CART_DATA: CartItem[] = [
   {
     id: '1',
     title: 'Margherita: tomato sauce',
@@ -96,7 +97,9 @@ export const CartItem = ({ item }: { item: CartItem }) => {
 
       <View style={styles.card}>
         <Image
-          source={{ uri: item.image }}
+          source={{
+            uri: 'https://www.schwartz.co.uk/-/media/project/oneweb/schwartz/recipes/recipe_image_update/march_18_2025/easy_pizza_recipe_800x800.webp?rev=217b39d7488a4aa7947174d6e475219f&vd=20250325T174436Z&extension=webp&hash=36F310B7BA2EA4491AADEC213844DF8B',
+          }}
           style={styles.itemImage}
           resizeMode="contain"
         />
@@ -131,10 +134,15 @@ export const CartItem = ({ item }: { item: CartItem }) => {
   );
 };
 
-const CartScreen = () => {
+const CartScreen = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="MY CART" onMenu={() => {}} />
+      <MobileHeader
+        title="MY CART"
+        onMenu={() => {}}
+        leftIcon={<Home size={moderateScale(24)} color="white" />}
+        onLeftPress={() => navigation.navigate('HomeScreen')}
+      />
       {/* --- Header Section --- */}
       <View style={styles.header}>
         <GlowingSeparator />

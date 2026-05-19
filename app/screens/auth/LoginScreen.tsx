@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, Keyboard, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Keyboard,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -15,6 +21,8 @@ import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
 import { BorderRadius, COLORS, FontSizes, Spacing } from '@/constants/theme';
 import AuthService from '@/services/AuthService';
 import { handleFormErrors } from '@/utils/helpers';
+
+import BG_Image from '@/assets/images/splash.png';
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
   const [loading, setLoading] = useState(false);
@@ -64,62 +72,68 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
   };
 
   return (
-    <ScreenContainer contentStyle={styles.container} title="LOGIN NOW">
-      <Logo style={styles.logoContainer} size={180} />
-      <View style={styles.formContainer}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Email/Phone'}
-              placeholder="Enter Email/Phone"
-              value={value}
-              keyboardType="email-address"
-              error={errors.email?.message}
-            />
-          )}
-          name="email"
-        />
+    <ImageBackground
+      source={BG_Image}
+      style={{ flex: 1, backgroundColor: COLORS.white }}
+      resizeMode="cover"
+    >
+      <ScreenContainer contentStyle={styles.container} title="LOGIN NOW">
+        <Logo style={styles.logoContainer} size={180} />
+        <View style={styles.formContainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputField
+                onChangeText={onChange}
+                // label={'Email/Phone'}
+                placeholder="Enter Email/Phone"
+                value={value}
+                keyboardType="email-address"
+                error={errors.email?.message}
+              />
+            )}
+            name="email"
+          />
 
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Password'}
-              placeholder="Enter Password"
-              value={value}
-              error={errors.password?.message}
-              isPassword
-            />
-          )}
-          name="password"
-        />
-      </View>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputField
+                onChangeText={onChange}
+                // label={'Password'}
+                placeholder="Enter Password"
+                value={value}
+                error={errors.password?.message}
+                isPassword
+              />
+            )}
+            name="password"
+          />
+        </View>
 
-      <View style={styles.btnsContainer}>
-        <ButtonLarge
-          variant="warning"
-          style={styles.btn}
-          title={'Login'}
-          onPress={handleSubmit(handleLogin)}
-        />
+        <View style={styles.btnsContainer}>
+          <ButtonLarge
+            variant="warning"
+            style={styles.btn}
+            title={'Login'}
+            onPress={handleSubmit(handleLogin)}
+          />
 
-        <AppText style={styles.orText}>Or</AppText>
-        <ButtonLarge
-          style={styles.btn}
-          title={'Register'}
-          onPress={() => navigation.navigate('RegisterScreen')}
-        />
-      </View>
-    </ScreenContainer>
+          <AppText style={styles.orText}>Or</AppText>
+          <ButtonLarge
+            style={styles.btn}
+            title={'Register'}
+            onPress={() => navigation.navigate('RegisterScreen')}
+          />
+        </View>
+      </ScreenContainer>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 0,

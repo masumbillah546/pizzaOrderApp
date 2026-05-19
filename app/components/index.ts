@@ -21,4 +21,5 @@ export {default as ScreenContainer} from './ScreenContainer';
 export {default as SectionHeader} from './SectionHeader';
 export {default as SideBar} from './SideBar';
 export {default as GlowingSeparator} from './GlowingSeparator';
+export {default as CartCounter} from './CartCounter';
 

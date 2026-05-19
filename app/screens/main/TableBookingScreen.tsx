@@ -17,6 +17,8 @@ import ScreenSize, {
 } from '@/utils/ScreenSize';
 import { GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
+import TableCloth from './components/TableCloth';
+import DateTimeCard from './components/DateTimeCard';
 
 // --- Static Data Mocking Picker Values ---
 const DAYS = [...Array(31)].map((_, i) => (i + 1).toString());
@@ -265,79 +267,15 @@ const TableBookingScreen = () => {
 
         {/* --- SECTION 4: Gingham Tablecloth Background Pattern Context Footer --- */}
         <View style={styles.ginghamFooterContainer}>
-          <View
-            style={[
-              styles.ginghamFooterContainer,
-              {
-                transform: [{ rotate: '45deg' }],
-                overflow: 'visible',
-                width: '300%',
-                height: '310%',
-              },
-            ]}
-          >
-            <View style={styles.ginghamPatternLayer} pointerEvents="none">
-              {Array.from({ length: 48 }).map((_, idx) => (
-                <View
-                  key={idx}
-                  style={{
-                    height: '200%',
-                    width: 20,
-                    backgroundColor: COLORS.theme,
-                  }}
-                ></View>
-              ))}
-            </View>
-
-            <View
-              style={[
-                styles.ginghamPatternLayer,
-                { flexDirection: 'column', opacity: 0.6 },
-              ]}
-              pointerEvents="none"
-            >
-              {Array.from({ length: 48 }).map((_, idx) => (
-                <View
-                  key={idx}
-                  style={{
-                    height: 20,
-                    width: '200%',
-                    backgroundColor: COLORS.theme,
-                  }}
-                ></View>
-              ))}
-            </View>
-          </View>
-
-          {/* Transparent Live Preview Context Card Floating Over Gingham Overlay */}
-          <View style={{ position: 'absolute', width: '90%', gap: verticalScale(15) }}>
-            <View style={styles.transparentPreviewCard}>
-              <Text style={styles.previewTimeLabel}>
-                {selectedHour === '12'
-                  ? '12 PM'
-                  : `${selectedHour} ${selectedPeriod}`}
-              </Text>
-              <Text style={styles.previewDayOfWeekText}>Saturday</Text>
-
-              <View style={styles.previewDateRow}>
-                <Text style={styles.previewDateNum}>{selectedDay}</Text>
-                <Text style={styles.previewDateMonth}>{selectedMonth}</Text>
-                <Text style={styles.previewDateYear}>{selectedYear}</Text>
-              </View>
-
-              <Text style={styles.previewGuestFooterCount}>
-                Guest No. {guests.replace(/[^0-9]/g, '')}
-              </Text>
-            </View>
-
-            {/* Primary Action Button */}
-            <TouchableOpacity
-              style={styles.nextActionButton}
-              activeOpacity={0.9}
-            >
-              <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
-          </View>
+          <TableCloth />
+          <DateTimeCard
+            selectedDay={selectedDay}
+            selectedMonth={selectedMonth}
+            selectedYear={selectedYear}
+            selectedHour={selectedHour}
+            selectedPeriod={selectedPeriod}
+            guests={guests}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -479,80 +417,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F7F7F7',
     overflow: 'hidden',
-  },
-  ginghamPatternLayer: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    flexDirection: 'row',
-    gap: 20,
-    opacity: 0.6,
-    transform: [{ rotate: '0deg' }], // Angled checker layout mimicking cloth weave lines
-    zIndex: -1,
-  },
-  transparentPreviewCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.75)', // Transparent frosted layer
-    borderRadius: moderateScale(4),
-    paddingVertical: verticalScale(16),
-    alignItems: 'center',
-    zIndex: 2,
-  },
-  previewTimeLabel: {
-    fontSize: moderateScale(14),
-    fontWeight: 'bold',
-    color: '#E04F4F', // Distinctive bright crimson notification accent text
-    marginBottom: verticalScale(4),
-  },
-  previewDayOfWeekText: {
-    fontSize: moderateScale(16),
-    fontWeight: '700',
-    color: '#333333',
-    marginBottom: verticalScale(8),
-  },
-  previewDateRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: verticalScale(6),
-  },
-  previewDateNum: {
-    fontSize: moderateScale(26),
-    fontWeight: 'bold',
-    color: '#333333',
-    marginRight: scale(10),
-  },
-  previewDateMonth: {
-    fontSize: moderateScale(22),
-    fontWeight: 'bold',
-    color: '#333333',
-    marginRight: scale(10),
-  },
-  previewDateYear: {
-    fontSize: moderateScale(22),
-    fontWeight: 'bold',
-    color: '#333333',
-  },
-  previewGuestFooterCount: {
-    fontSize: moderateScale(11),
-    fontWeight: '800',
-    color: '#222222',
-  },
-  nextActionButton: {
-    backgroundColor: '#FFCC00', // Gold/Yellow UI button color accent standard
-    width: '100%',
-    height: verticalScale(48),
-    borderRadius: moderateScale(24),
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-  },
-  nextButtonText: {
-    color: '#FFFFFF',
-    fontSize: moderateScale(20),
-    fontWeight: 'bold',
   },
 });
 

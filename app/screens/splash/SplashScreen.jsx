@@ -1,15 +1,25 @@
 import React from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  ImageBackground,
+} from 'react-native';
 //
 import { COLORS, FontSizes, Shadows } from '@/constants/theme';
 import { moderateScale, verticalScale } from '@/utils/ScreenSize';
 import { AppText, ButtonLarge, Logo } from '@/components';
 import { navigationRef } from '@/navigation/RootNavigator';
+import BG_Image from '@/assets/images/splash.png';
 
 const SplashScreen = ({ navigation, isLoading = false }) => {
   const [loading, setLoading] = React.useState(false);
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      style={styles.container}
+      resizeMode="cover"
+      source={BG_Image}
+    >
       <View style={styles.logoContainer}>
         <Logo />
       </View>
@@ -35,7 +45,7 @@ const SplashScreen = ({ navigation, isLoading = false }) => {
           title="Start"
         />
       )}
-    </View>
+    </ImageBackground>
   );
 };
 

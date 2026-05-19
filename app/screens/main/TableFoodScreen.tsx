@@ -1,0 +1,72 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { scale, verticalScale } from '@/utils/ScreenSize';
+import { GlowingSeparator, MobileHeader } from '@/components';
+import { COLORS } from '@/constants/theme';
+import TableCloth from './components/TableCloth';
+import DateTimeCard from './components/DateTimeCard';
+import { FOOD_DATA, PizzaCard } from './HomeScreen';
+
+const TableFoodScreen = () => {
+  // Picker states tracking indices corresponding to mockup centers
+  const [selectedDay, setSelectedDay] = useState('12');
+  const [selectedMonth, setSelectedMonth] = useState('Aug');
+  const [selectedYear, setSelectedYear] = useState('2017');
+  const [selectedHour, setSelectedHour] = useState('12');
+  const [selectedPeriod, setSelectedPeriod] = useState('AM');
+  const [guests, setGuests] = useState('4 People');
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <MobileHeader title="FOOD & TABLE BOOKING" onMenu={() => {}} />
+      <View style={styles.ginghamFooterContainer}>
+        <TableCloth />
+        <DateTimeCard
+          selectedDay={selectedDay}
+          selectedMonth={selectedMonth}
+          selectedYear={selectedYear}
+          selectedHour={selectedHour}
+          selectedPeriod={selectedPeriod}
+          guests={guests}
+          showNextBtn={false}
+        />
+      </View>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {FOOD_DATA.map(item => (
+          <PizzaCard key={item.id} item={item} />
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    paddingTop: verticalScale(10),
+    paddingBottom: verticalScale(100),
+    paddingHorizontal: scale(15),
+  },
+  /* --- Gingham Overlay and Preview Context Layouts --- */
+  ginghamFooterContainer: {
+    width: '100%',
+    flexGrow: 1,
+    aspectRatio: 5 / 3,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F7F7F7',
+    overflow: 'hidden',
+  },
+});
+
+export default TableFoodScreen;

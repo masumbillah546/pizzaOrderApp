@@ -6,11 +6,14 @@ import {
   SafeAreaView,
   StatusBar,
   Dimensions,
+  ImageBackground,
 } from 'react-native';
 import { Check, X, Pizza, Wine, Drumstick, Strawberry, GlassWater } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
+
+import BG_Image from '@/assets/images/splash.png';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -32,7 +35,6 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <StatusBar backgroundColor="#F4A472" barStyle="light-content" />
       <MobileHeader title="FEDILITY CARD" onMenu={() => {}} />
 
       {/* --- HEADER BLOCK --- */}
@@ -46,20 +48,8 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
         </Text>
       </View>
 
-      {/* --- BACKGROUND WATERMARK CANVAS PATTERN --- */}
-      {/* <View style={styles.watermarkCanvas} pointerEvents="none">
-        {watermarkRows.map((_, rowIndex) => (
-          <View key={rowIndex} style={[styles.watermarkRow, rowIndex % 2 === 1 && styles.watermarkRowShifted]}>
-            <Wine size={scale(34)} color="#E8E8E8" strokeWidth={1} style={styles.watermarkIcon} />
-            <Drumstick size={scale(36)} color="#E8E8E8" strokeWidth={1} style={styles.watermarkIcon} />
-            <Strawberry size={scale(32)} color="#E8E8E8" strokeWidth={1} style={styles.watermarkIcon} />
-            <GlassWater size={scale(34)} color="#E8E8E8" strokeWidth={1} style={styles.watermarkIcon} />
-          </View>
-        ))}
-      </View> */}
-
       {/* --- CORE CONTENT BODY AREA --- */}
-      <View style={styles.mainCoreBody}>
+      <ImageBackground style={styles.mainCoreBody} source={BG_Image}>
         
         {/* Curved Reward Announcement Title */}
         <Text style={styles.freeCurveLabelText}>Free!!!</Text>
@@ -106,7 +96,7 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
           Remaining <Text style={styles.progressCounterHighlight}>{remainingCount}</Text> To Get One Free
         </Text>
 
-      </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -123,12 +113,6 @@ const styles = StyleSheet.create({
     paddingBottom: verticalScale(14),
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-    zIndex: 10,
   },
   headerPrimaryText: {
     color: '#FFFFFF',
@@ -142,38 +126,13 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(15),
     fontWeight: '700',
   },
-  /* --- Watermark Line Grid Arrays styling properties --- */
-  watermarkCanvas: {
-    position: 'absolute',
-    top: verticalScale(80),
-    left: 0,
-    right: 0,
-    bottom: 0,
-    opacity: 0.6,
-    zIndex: 1,
-    justifyContent: 'space-around',
-    paddingVertical: verticalScale(20),
-  },
-  watermarkRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    paddingHorizontal: scale(10),
-  },
-  watermarkRowShifted: {
-    transform: [{ translateX: scale(25) }],
-  },
-  watermarkIcon: {
-    transform: [{ rotate: '-15deg' }],
-  },
   /* --- Content Elements Rules --- */
   mainCoreBody: {
-    flex: 1,
+    flexGrow: 1,
     zIndex: 5,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: scale(30),
-    marginTop: verticalScale(-20),
   },
   freeCurveLabelText: {
     fontSize: moderateScale(38),

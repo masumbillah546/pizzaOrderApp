@@ -25,6 +25,9 @@ import {
   FedilityCardScreen,
   CategoriesScreen,
   CategoryItemScreen,
+  BuyingOptionScreen,
+  OrderDetailsScreen,
+  TableFoodScreen,
 } from '@/screens';
 //
 import { COLORS, FontSizes } from '@/constants/theme';
@@ -99,6 +102,11 @@ export default function MainStack() {
         // options={{ title: 'Messages' }}
       />
       <Drawer.Screen
+        name="BuyingOptionScreen"
+        component={BuyingOptionScreen}
+        // options={{ title: 'Messages' }}
+      />
+      <Drawer.Screen
         name="CartScreen"
         component={CartScreen}
         // options={{ title: 'Messages' }}
@@ -117,6 +125,12 @@ export default function MainStack() {
       <Drawer.Screen
         name="OrderHistoryScreen"
         component={OrderHistoryScreen}
+        // options={{ title: 'Messages' }}
+      />
+
+      <Drawer.Screen
+        name="OrderDetailsScreen"
+        component={OrderDetailsScreen}
         // options={{ title: 'Messages' }}
       />
 
@@ -147,6 +161,12 @@ export default function MainStack() {
       <Drawer.Screen
         name="TableBookingScreen"
         component={TableBookingScreen}
+        // options={{ title: 'Messages' }}
+      />
+
+      <Drawer.Screen
+        name="TableFoodScreen"
+        component={TableFoodScreen}
         // options={{ title: 'Messages' }}
       />
 

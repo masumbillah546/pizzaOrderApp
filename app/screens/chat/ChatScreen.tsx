@@ -13,6 +13,8 @@ import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
 
+import BG_Image from '@/assets/images/splash.png';
+
 // --- Types ---
 interface ChatMessage {
   id: string;
@@ -42,7 +44,11 @@ const ChatScreen = () => {
   const [inputText, setInputText] = useState('');
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ImageBackground
+      source={BG_Image}
+      style={styles.container}
+      resizeMode="cover"
+    >
       <MobileHeader title="CHAT" onMenu={() => {}} />
       <View
         // source={require('./assets/food_doodle_pattern.png')} // Replace with your seamless grey doodle background asset
@@ -114,7 +120,7 @@ const ChatScreen = () => {
           <Text style={styles.sendButtonText}>SEND</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </ImageBackground>
   );
 };
 

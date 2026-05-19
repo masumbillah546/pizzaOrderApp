@@ -65,10 +65,11 @@ export default function ScreenContainer({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
+    // backgroundColor: '#FAFAFA',
   },
   content: {
     flexGrow: 1,
     padding: scale(16),
+    backgroundColor: '#FAFAFA',
   },
 });

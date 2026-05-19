@@ -12,6 +12,7 @@ import { Timer } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { COLORS } from '@/constants/theme';
 import OrderSuccessModal from '@/components/modals/OrderSuccessModal';
+import RattingModal from '@/components/modals/RattingModal';
 
 // --- Types ---
 interface OrderItem {
@@ -59,6 +60,10 @@ const ORDER_HISTORY_DATA: OrderItem[] = [
 ];
 
 const OrderHistoryScreen = ({ navigation }: { navigation: any }) => {
+  const [isOrderSuccessModalVisible, setIsOrderSuccessModalVisible] =
+    React.useState(false);
+  const [isRattingModalVisible, setIsRattingModalVisible] =
+    React.useState(false);
   return (
     <SafeAreaView style={styles.container}>
       {/* --- Header Section --- */}
@@ -67,21 +72,35 @@ const OrderHistoryScreen = ({ navigation }: { navigation: any }) => {
       </View>
 
       {/* --- Scrollable Order List --- */}
-      <ScrollView contentContainerStyle={styles.listContainer} showsVerticalScrollIndicator={false}>
-        {ORDER_HISTORY_DATA.map((item) => (
+      <ScrollView
+        contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {ORDER_HISTORY_DATA.map(item => (
           <View key={item.id} style={styles.card}>
-            
             {/* Left Thumbnail Image */}
-            <Image source={item.image} style={styles.itemImage} resizeMode="cover" />
+            <Image
+              source={{
+                uri: 'https://www.schwartz.co.uk/-/media/project/oneweb/schwartz/recipes/recipe_image_update/march_18_2025/easy_pizza_recipe_800x800.webp?rev=217b39d7488a4aa7947174d6e475219f&vd=20250325T174436Z&extension=webp&hash=36F310B7BA2EA4491AADEC213844DF8B',
+              }}
+              style={styles.itemImage}
+              resizeMode="cover"
+            />
 
             {/* Central Information Block */}
             <View style={styles.detailsContainer}>
               <Text style={styles.orderIdText}>
-                Your Order ID : <Text style={styles.idHighlight}>{item.orderId}</Text> ({item.itemCount} item)
+                Your Order ID :{' '}
+                <Text style={styles.idHighlight}>{item.orderId}</Text> (
+                {item.itemCount} item)
               </Text>
-              
+
               <View style={styles.statusRow}>
-                <Timer size={moderateScale(14)} color="#555555" style={styles.timerIcon} />
+                <Timer
+                  size={moderateScale(14)}
+                  color="#555555"
+                  style={styles.timerIcon}
+                />
                 <Text style={styles.statusDescription}>{item.statusText}</Text>
               </View>
             </View>
@@ -90,24 +109,40 @@ const OrderHistoryScreen = ({ navigation }: { navigation: any }) => {
             <View style={styles.actionsContainer}>
               {item.isActive ? (
                 <>
-                  <TouchableOpacity style={[styles.btn, styles.orangeBtn]} activeOpacity={0.8} onPress={() => navigation.navigate('OrderTrackingScreen')}>
+                  <TouchableOpacity
+                    style={[styles.btn, styles.orangeBtn]}
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate('OrderDetailsScreen')}
+                  >
                     <Text style={styles.btnText}>Details</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={[styles.btn, styles.yellowBtn]} activeOpacity={0.8}>
+                  <TouchableOpacity
+                    style={[styles.btn, styles.yellowBtn]}
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate('OrderTrackingScreen')}
+                  >
                     <Text style={styles.btnText}>Status</Text>
                   </TouchableOpacity>
                 </>
               ) : (
-                <TouchableOpacity style={[styles.btn, styles.greyBtn]} activeOpacity={0.8}>
+                <TouchableOpacity
+                  style={[styles.btn, styles.greyBtn]}
+                  activeOpacity={0.8}
+                  onPress={() => setIsRattingModalVisible(true)}
+                >
                   <Text style={styles.btnText}>Rate us</Text>
                 </TouchableOpacity>
               )}
             </View>
-
           </View>
         ))}
       </ScrollView>
       <OrderSuccessModal visible={false} orderId="D5FX2" onClose={() => {}} />
+      <RattingModal
+        visible={isRattingModalVisible}
+        onClose={() => setIsRattingModalVisible(false)}
+        onSubmit={() => {}}
+      />
     </SafeAreaView>
   );
 };

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, Keyboard, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Keyboard,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -16,6 +22,8 @@ import { BorderRadius, COLORS, FontSizes, Spacing } from '@/constants/theme';
 import AuthService from '@/services/AuthService';
 import { handleFormErrors } from '@/utils/helpers';
 import EmailIcon from '@/assets/icons/email.svg';
+
+import BG_Image from '@/assets/images/splash.png';
 
 export default function VerifyCodeScreen({ navigation }: { navigation: any }) {
   const [loading, setLoading] = useState(false);
@@ -65,52 +73,54 @@ export default function VerifyCodeScreen({ navigation }: { navigation: any }) {
   };
 
   return (
-    <ScreenContainer contentStyle={styles.container} title="REGISTER NOW">
-      <View style={styles.logoContainer}>
-        <View style={styles.circle1}>
-          <View style={styles.circle2}>
-            <EmailIcon width={moderateScale(50)} height={moderateScale(50)} />
+    <ImageBackground style={{ flex: 1 }} resizeMode="cover" source={BG_Image}>
+      <ScreenContainer contentStyle={styles.container} title="REGISTER NOW">
+        <View style={styles.logoContainer}>
+          <View style={styles.circle1}>
+            <View style={styles.circle2}>
+              <EmailIcon width={moderateScale(50)} height={moderateScale(50)} />
+            </View>
+          </View>
+          <AppText style={styles.title}>
+            We sent you a 4 digit code. Please type code to verify your account
+          </AppText>
+        </View>
+        <View style={styles.formContainer}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputField
+                onChangeText={onChange}
+                // label={'Password'}
+                placeholder="4 digit code"
+                value={value}
+                keyboardType="phone-pad"
+                error={errors.password?.message}
+              />
+            )}
+            name="password"
+          />
+          <AppText style={[styles.title, { color: COLORS.theme }]}>
+            Send a new code
+          </AppText>
+          <View style={styles.btnsContainer}>
+            <ButtonLarge
+              style={styles.btn}
+              title={'Enter'}
+              onPress={() =>
+                navigation.reset({ index: 0, routes: [{ name: 'Main' }] })
+              }
+            />
           </View>
         </View>
-        <AppText style={styles.title}>
-          We sent you a 4 digit code. Please type code to verify your account
-        </AppText>
-      </View>
-      <View style={styles.formContainer}>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <InputField
-              onChangeText={onChange}
-              // label={'Password'}
-              placeholder="4 digit code"
-              value={value}
-              keyboardType="phone-pad"
-              error={errors.password?.message}
-            />
-          )}
-          name="password"
-        />
-        <AppText style={[styles.title, { color: COLORS.theme }]}>
-          Send a new code
-        </AppText>
-        <View style={styles.btnsContainer}>
-          <ButtonLarge
-            style={styles.btn}
-            title={'Enter'}
-            onPress={() =>
-              navigation.reset({ index: 0, routes: [{ name: 'Main' }] })
-            }
-          />
-        </View>
-      </View>
-    </ScreenContainer>
+      </ScreenContainer>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     // justifyContent: 'center',
     // alignItems: 'center',
     padding: 0,

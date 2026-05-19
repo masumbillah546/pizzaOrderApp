@@ -15,8 +15,9 @@ import {
   ChevronRight,
   Star,
 } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
 import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
-import { ButtonLarge, MobileHeader } from '@/components';
+import { ButtonLarge, CartCounter, MobileHeader } from '@/components';
 import { Shadows } from '@/constants/theme';
 
 // --- Types ---
@@ -30,7 +31,7 @@ interface FoodItem {
   isSpecial?: boolean;
 }
 
-const FOOD_DATA: FoodItem[] = [
+export const FOOD_DATA: FoodItem[] = [
   {
     id: '1',
     title: 'Margherita: tomato sauce',
@@ -67,6 +68,58 @@ const FOOD_DATA: FoodItem[] = [
   },
 ];
 
+export const PizzaCard = ({ item }: { item: FoodItem }) => {
+  const navigation = useNavigation<any>();
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('FoodDetailScreen');
+      }}
+      key={item.id}
+      style={styles.card}
+    >
+      <Image
+        source={{
+          uri: 'https://www.schwartz.co.uk/-/media/project/oneweb/schwartz/recipes/recipe_image_update/march_18_2025/easy_pizza_recipe_800x800.webp?rev=217b39d7488a4aa7947174d6e475219f&vd=20250325T174436Z&extension=webp&hash=36F310B7BA2EA4491AADEC213844DF8B',
+        }}
+        style={styles.foodImage}
+      />
+
+      <View style={styles.detailsContainer}>
+        <Text style={styles.foodTitle}>{item.title}</Text>
+        <Text style={styles.foodDesc} numberOfLines={2}>
+          {item.description}
+        </Text>
+
+        <View style={styles.ratingRow}>
+          {[1, 2, 3, 4, 5].map(s => (
+            <Star
+              key={s}
+              size={moderateScale(14)}
+              fill={s <= item.rating ? '#FFD700' : 'transparent'}
+              color={s <= item.rating ? '#FFD700' : '#C4C4C4'}
+            />
+          ))}
+        </View>
+
+        <Text style={styles.priceText}>
+          Price :<Text style={styles.priceBold}>{item.price}</Text>
+        </Text>
+
+        <TouchableOpacity style={styles.buyButton}>
+          <Text style={styles.buyText}>Buy</Text>
+        </TouchableOpacity>
+      </View>
+
+      {item.isSpecial && (
+        <View style={styles.specialBadge}>
+          <Text style={styles.specialText}>Todays{'\n'}Spacial</Text>
+        </View>
+      )}
+    </TouchableOpacity>
+  );
+};
+
 const MenuPage = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.container}>
@@ -80,6 +133,8 @@ const MenuPage = ({ navigation }: { navigation: any }) => {
         // rightLabel={null}
         // leftIcon={null}
         // leftLabel={null}
+        leftIcon={<CartCounter />}
+        onLeftPress={() => navigation.navigate('CartScreen')}
       />
       {/* --- Category Header --- */}
       <View style={styles.header}>
@@ -112,52 +167,7 @@ const MenuPage = ({ navigation }: { navigation: any }) => {
         showsVerticalScrollIndicator={false}
       >
         {FOOD_DATA.map(item => (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('FoodDetailScreen');
-            }}
-            key={item.id}
-            style={styles.card}
-          >
-            <Image
-              source={{
-                uri: 'https://www.schwartz.co.uk/-/media/project/oneweb/schwartz/recipes/recipe_image_update/march_18_2025/easy_pizza_recipe_800x800.webp?rev=217b39d7488a4aa7947174d6e475219f&vd=20250325T174436Z&extension=webp&hash=36F310B7BA2EA4491AADEC213844DF8B',
-              }}
-              style={styles.foodImage}
-            />
-
-            <View style={styles.detailsContainer}>
-              <Text style={styles.foodTitle}>{item.title}</Text>
-              <Text style={styles.foodDesc} numberOfLines={2}>
-                {item.description}
-              </Text>
-
-              <View style={styles.ratingRow}>
-                {[1, 2, 3, 4, 5].map(s => (
-                  <Star
-                    key={s}
-                    size={moderateScale(14)}
-                    fill={s <= item.rating ? '#FFD700' : 'transparent'}
-                    color={s <= item.rating ? '#FFD700' : '#C4C4C4'}
-                  />
-                ))}
-              </View>
-
-              <Text style={styles.priceText}>
-                Price :<Text style={styles.priceBold}>{item.price}</Text>
-              </Text>
-
-              <TouchableOpacity style={styles.buyButton}>
-                <Text style={styles.buyText}>Buy</Text>
-              </TouchableOpacity>
-            </View>
-
-            {item.isSpecial && (
-              <View style={styles.specialBadge}>
-                <Text style={styles.specialText}>Todays{'\n'}Spacial</Text>
-              </View>
-            )}
-          </TouchableOpacity>
+          <PizzaCard key={item.id} item={item} />
         ))}
       </ScrollView>
       <ButtonLarge
@@ -170,7 +180,7 @@ const MenuPage = ({ navigation }: { navigation: any }) => {
           alignSelf: 'center',
           opacity: 0.8,
         }}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('BuyingOptionScreen')}
         title="Buy Now!!"
       />
     </View>

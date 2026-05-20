@@ -28,6 +28,8 @@ import {
   BuyingOptionScreen,
   OrderDetailsScreen,
   TableFoodScreen,
+  ConfirmCartScreen,
+  CheckoutScreen,
 } from '@/screens';
 //
 import { COLORS, FontSizes } from '@/constants/theme';
@@ -109,6 +111,16 @@ export default function MainStack() {
       <Drawer.Screen
         name="CartScreen"
         component={CartScreen}
+        // options={{ title: 'Messages' }}
+      />
+      <Drawer.Screen
+        name="ConfirmCartScreen"
+        component={ConfirmCartScreen}
+        // options={{ title: 'Messages' }}
+      />
+       <Drawer.Screen
+        name="CheckoutScreen"
+        component={CheckoutScreen}
         // options={{ title: 'Messages' }}
       />
       <Drawer.Screen

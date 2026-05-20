@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {
   MinusCircle,
@@ -19,8 +20,19 @@ import {
 } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
-import { GlowingSeparator, MobileHeader } from '@/components';
-import { COLORS } from '@/constants/theme';
+import {
+  AppText,
+  ButtonLarge,
+  GlowingSeparator,
+  MobileHeader,
+  Row,
+} from '@/components';
+import { COLORS, FontSizes, Shadows } from '@/constants/theme';
+import TableCloth from './components/TableCloth';
+import DateTimeCard from './components/DateTimeCard';
+import CheckoutSummaryHero from './components/CheckoutSummaryHero';
+import { RenderVariantItem, VARIANTS_DATA } from './CategoryItemScreen';
+import PaymentModal from '@/components/modals/PaymentModal';
 
 // --- Types ---
 interface CartItem {
@@ -30,6 +42,10 @@ interface CartItem {
   quantity: number;
   image: any;
   category: 'food' | 'drink' | 'hot';
+}
+
+interface CartState {
+  [key: string]: number; // Tracks dynamic integer item counts mapped to IDs
 }
 
 export const CART_DATA: CartItem[] = [
@@ -134,42 +150,72 @@ export const CartItem = ({ item }: { item: CartItem }) => {
   );
 };
 
-const CartScreen = ({ navigation }: { navigation: any }) => {
+const CheckoutScreen = ({ navigation }: { navigation: any }) => {
+  const [paymentModal, setShowPaymentModal] = useState(false);
+  // Initialize sample dynamic count states based on image specs (Item 1 = 2 count, Item 3 = 1 count)
+  const [cart, setCart] = useState<CartState>({
+    '1': 2,
+    '3': 1,
+  });
+
+  // Structural pricing calculation core
+  const baseCalculatedTotal = Object.keys(cart).reduce((sum, key) => {
+    const variant = VARIANTS_DATA.find(v => v.id === key);
+    const quantity = cart[key];
+    return sum + (variant ? variant.basePrice * quantity : 0);
+  }, 0);
+
+  // Fallback to match exact design mock total if edge parameters require it
+  const displayTotal = baseCalculatedTotal > 0 ? baseCalculatedTotal : 50;
+
+  const incrementQuantity = (id: string) => {
+    setCart(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+  };
+
+  const decrementQuantity = (id: string) => {
+    setCart(prev => {
+      const updated = { ...prev };
+      if (updated[id] <= 1) {
+        delete updated[id];
+      } else {
+        updated[id] -= 1;
+      }
+      return updated;
+    });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <MobileHeader
-        title="MY CART"
+        title="CART"
         onMenu={() => {}}
         leftIcon={<Home size={moderateScale(24)} color="white" />}
         onLeftPress={() => navigation.navigate('HomeScreen')}
       />
-      {/* --- Header Section --- */}
-      <View style={styles.header}>
-        <GlowingSeparator />
-        <Text style={styles.headerCount}>You have 4 item</Text>
-        <Text style={styles.headerCost}>Cost : $16</Text>
-      </View>
-
-      {/* --- Cart Items List --- */}
-      <ScrollView
-        contentContainerStyle={styles.listContainer}
+      <CheckoutSummaryHero
+        totalAmount={displayTotal}
+        onCheckoutSubmit={() => setShowPaymentModal(true)}
+      />
+      {/* --- Variants Interactive FlatList Matrix Canvas --- */}
+      <FlatList
+        data={VARIANTS_DATA}
+        // renderItem={renderVariantItem}
+        renderItem={({ item }) => (
+          <RenderVariantItem
+            item={item}
+            cart={cart}
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+          />
+        )}
+        keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-      >
-        {CART_DATA.map(item => (
-          <CartItem key={item.id} item={item} />
-        ))}
-      </ScrollView>
-
-      {/* --- Bottom Action Buttons --- */}
-      <View style={styles.footer}>
-        <TouchableOpacity style={[styles.actionButton, styles.deliveryBtn]} onPress={() => navigation.navigate('ConfirmCartScreen')}>
-          <Text style={styles.btnText}>DILEVERY</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.actionButton, styles.pickupBtn]} onPress={() => navigation.navigate('ConfirmCartScreen')}>
-          <Text style={styles.btnText}>PICK UP</Text>
-        </TouchableOpacity>
-      </View>
+        contentContainerStyle={styles.scrollListPaddingBottomModifier}
+      />
+      <PaymentModal
+        visible={paymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onConfirm={() => setShowPaymentModal(false)}
+      />
     </SafeAreaView>
   );
 };
@@ -179,27 +225,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9F9F9',
   },
-  header: {
-    backgroundColor: COLORS.theme,
-    paddingBottom: verticalScale(15),
-    alignItems: 'center',
-    position: 'relative',
-  },
-  headerCount: {
-    color: 'white',
-    fontSize: moderateScale(18),
-    fontWeight: '600',
-  },
-  headerCost: {
-    color: '#333333',
-    fontSize: moderateScale(16),
-    fontWeight: 'bold',
-    marginTop: verticalScale(5),
-  },
-  listContainer: {
-    paddingHorizontal: scale(15),
-    paddingTop: verticalScale(20),
-    paddingBottom: verticalScale(100), // Spacing for absolute footer
+  /* --- Variants List Content Architecture --- */
+  scrollListPaddingBottomModifier: {
+    paddingHorizontal: scale(24),
+    paddingBottom: verticalScale(100), // Protects visibility against clipping underneath absolute footer items
   },
   cardContainer: {
     position: 'relative',
@@ -282,34 +311,9 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: '#F9F9F9',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: scale(15),
-    paddingVertical: verticalScale(20),
-  },
-  actionButton: {
-    flex: 0.47,
-    height: verticalScale(50),
-    borderRadius: moderateScale(25),
     justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  deliveryBtn: {
-    backgroundColor: '#F4A472',
-  },
-  pickupBtn: {
-    backgroundColor: '#FFCC00',
-  },
-  btnText: {
-    color: 'white',
-    fontSize: moderateScale(16),
-    fontWeight: 'bold',
-    letterSpacing: 0.5,
+    paddingVertical: verticalScale(20),
   },
 });
 
-export default CartScreen;
+export default CheckoutScreen;

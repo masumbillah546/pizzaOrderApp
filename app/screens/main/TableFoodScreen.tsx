@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { scale, verticalScale } from '@/utils/ScreenSize';
-import { GlowingSeparator, MobileHeader } from '@/components';
-import { COLORS } from '@/constants/theme';
+import { ButtonLarge, GlowingSeparator, MobileHeader } from '@/components';
+import { COLORS, Shadows } from '@/constants/theme';
 import TableCloth from './components/TableCloth';
 import DateTimeCard from './components/DateTimeCard';
-import { FOOD_DATA, PizzaCard } from './HomeScreen';
+import { FOOD_DATA, FoodCategoriesHeader, PizzaCard } from './HomeScreen';
 
-const TableFoodScreen = () => {
+const TableFoodScreen = ({ navigation }) => {
   // Picker states tracking indices corresponding to mockup centers
   const [selectedDay, setSelectedDay] = useState('12');
   const [selectedMonth, setSelectedMonth] = useState('Aug');
@@ -31,6 +31,7 @@ const TableFoodScreen = () => {
           showNextBtn={false}
         />
       </View>
+      <FoodCategoriesHeader />
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
@@ -39,6 +40,19 @@ const TableFoodScreen = () => {
           <PizzaCard key={item.id} item={item} />
         ))}
       </ScrollView>
+      <ButtonLarge
+        variant="warning"
+        style={{
+          marginBottom: verticalScale(30),
+          ...Shadows.large,
+          position: 'absolute',
+          bottom: 0,
+          alignSelf: 'center',
+          // opacity: 0.8,
+        }}
+        onPress={() => navigation.navigate('BuyingOptionScreen')}
+        title="Buy Now!!"
+      />
     </SafeAreaView>
   );
 };

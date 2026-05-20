@@ -9,11 +9,14 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
+import Svg, { Path, Defs, ClipPath, Image as SvgImage } from 'react-native-svg';
+
 import { MapPin, ChevronRight, Clock } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
+import ProfilePhoto from './components/ProfilePhoto';
 
 const ProfileScreen = ({ navigation }) => {
   const menuItems = ['PROFILE EDIT', 'MY HISTORY', 'FEDILITY PROFILE'];
@@ -37,22 +40,11 @@ const ProfileScreen = ({ navigation }) => {
           style={styles.bannerContainer}
           tintColor={'black'}
         >
-          {/* Avatar Area with Abstract Wire Border Accent */}
-          {/* <View style={styles.avatarWrapper}>
-            <Image
-              source={require('./assets/user_avatar.png')} // Replace with local image asset
-              style={styles.avatar}
-            />
-            <Image
-              source={require('./assets/yellow_blob_ring.png')}
-              style={styles.blobOverlay}
-              resizeMode="contain"
-            />
-          </View> */}
+          <ProfilePhoto navigation={navigation} />
 
           {/* Location Identifier */}
           <View style={styles.locationRow}>
-            <MapPin size={moderateScale(18)} color="#F4A472" fill="#F4A472" />
+            <MapPin size={moderateScale(18)} color="#F4A472" />
             <Text style={styles.locationText}>Mirpu-11,Dhaka</Text>
           </View>
 

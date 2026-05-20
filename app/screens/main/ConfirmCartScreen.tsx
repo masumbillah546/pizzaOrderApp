@@ -19,8 +19,16 @@ import {
 } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
-import { GlowingSeparator, MobileHeader } from '@/components';
-import { COLORS } from '@/constants/theme';
+import {
+  AppText,
+  ButtonLarge,
+  GlowingSeparator,
+  MobileHeader,
+  Row,
+} from '@/components';
+import { COLORS, FontSizes, Shadows } from '@/constants/theme';
+import TableCloth from './components/TableCloth';
+import DateTimeCard from './components/DateTimeCard';
 
 // --- Types ---
 interface CartItem {
@@ -134,7 +142,7 @@ export const CartItem = ({ item }: { item: CartItem }) => {
   );
 };
 
-const CartScreen = ({ navigation }: { navigation: any }) => {
+const ConfirmCartScreen = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={styles.container}>
       <MobileHeader
@@ -143,11 +151,33 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
         leftIcon={<Home size={moderateScale(24)} color="white" />}
         onLeftPress={() => navigation.navigate('HomeScreen')}
       />
-      {/* --- Header Section --- */}
-      <View style={styles.header}>
-        <GlowingSeparator />
-        <Text style={styles.headerCount}>You have 4 item</Text>
-        <Text style={styles.headerCost}>Cost : $16</Text>
+      <View style={styles.ginghamFooterContainer}>
+        <TableCloth />
+        <Row style={styles.subTotal}>
+          <AppText
+            style={{ fontSize: FontSizes.xl, color: COLORS.neutral[800] }}
+          >
+            Your Cart 5 Items
+          </AppText>
+          <AppText
+            style={{
+              fontSize: FontSizes.xxxl,
+              color: COLORS.neutral[800],
+              fontWeight: 'bold',
+            }}
+          >
+            $50
+          </AppText>
+        </Row>
+        <DateTimeCard
+          selectedDay={'12'}
+          selectedMonth={'Aug'}
+          selectedYear={'2026'}
+          selectedHour={'12 PM'}
+          selectedPeriod={''}
+          guests={'4'}
+          showNextBtn={false}
+        />
       </View>
 
       {/* --- Cart Items List --- */}
@@ -162,13 +192,12 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
 
       {/* --- Bottom Action Buttons --- */}
       <View style={styles.footer}>
-        <TouchableOpacity style={[styles.actionButton, styles.deliveryBtn]} onPress={() => navigation.navigate('ConfirmCartScreen')}>
-          <Text style={styles.btnText}>DILEVERY</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.actionButton, styles.pickupBtn]} onPress={() => navigation.navigate('ConfirmCartScreen')}>
-          <Text style={styles.btnText}>PICK UP</Text>
-        </TouchableOpacity>
+        <ButtonLarge
+          variant="warning"
+          title="Confirm"
+          onPress={() => navigation.navigate('CheckoutScreen')}
+          style={[Shadows.medium]}
+        />
       </View>
     </SafeAreaView>
   );
@@ -179,22 +208,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F9F9F9',
   },
-  header: {
-    backgroundColor: COLORS.theme,
-    paddingBottom: verticalScale(15),
-    alignItems: 'center',
+  ginghamFooterContainer: {
+    width: '100%',
+    flexGrow: 1,
+    aspectRatio: 5 / 3,
     position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F7F7F7',
+    overflow: 'hidden',
   },
-  headerCount: {
-    color: 'white',
-    fontSize: moderateScale(18),
-    fontWeight: '600',
-  },
-  headerCost: {
-    color: '#333333',
-    fontSize: moderateScale(16),
-    fontWeight: 'bold',
-    marginTop: verticalScale(5),
+  subTotal: {
+    position: 'absolute',
+    width: '90%',
+    top: 10,
+    paddingHorizontal: scale(15),
+    gap: scale(10),
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.warning[400],
   },
   listContainer: {
     paddingHorizontal: scale(15),
@@ -282,34 +313,9 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: '#F9F9F9',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: scale(15),
-    paddingVertical: verticalScale(20),
-  },
-  actionButton: {
-    flex: 0.47,
-    height: verticalScale(50),
-    borderRadius: moderateScale(25),
     justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  deliveryBtn: {
-    backgroundColor: '#F4A472',
-  },
-  pickupBtn: {
-    backgroundColor: '#FFCC00',
-  },
-  btnText: {
-    color: 'white',
-    fontSize: moderateScale(16),
-    fontWeight: 'bold',
-    letterSpacing: 0.5,
+    paddingVertical: verticalScale(20),
   },
 });
 
-export default CartScreen;
+export default ConfirmCartScreen;

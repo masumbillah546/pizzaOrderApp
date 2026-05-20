@@ -120,6 +120,34 @@ export const PizzaCard = ({ item }: { item: FoodItem }) => {
   );
 };
 
+export const FoodCategoriesHeader = () => {
+  return (
+    <View style={styles.header}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <TouchableOpacity style={[styles.categoryBtn, styles.activeCategory]}>
+          <Utensils color="black" size={moderateScale(24)} />
+          <Text style={styles.categoryTextActive}>All Food</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.categoryBtn}>
+          <Hamburger color="black" size={moderateScale(24)} />
+          <Text style={styles.categoryText}>First Food</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.categoryBtn}>
+          <Martini color="black" size={moderateScale(24)} />
+          <Text style={styles.categoryText}>Hard Drinks</Text>
+        </TouchableOpacity>
+      </ScrollView>
+      <ChevronRight
+        color="black"
+        size={moderateScale(20)}
+        style={styles.arrowIcon}
+      />
+    </View>
+  );
+};
+
 const MenuPage = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.container}>
@@ -137,29 +165,7 @@ const MenuPage = ({ navigation }: { navigation: any }) => {
         onLeftPress={() => navigation.navigate('CartScreen')}
       />
       {/* --- Category Header --- */}
-      <View style={styles.header}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity style={[styles.categoryBtn, styles.activeCategory]}>
-            <Utensils color="black" size={moderateScale(24)} />
-            <Text style={styles.categoryTextActive}>All Food</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.categoryBtn}>
-            <Hamburger color="black" size={moderateScale(24)} />
-            <Text style={styles.categoryText}>First Food</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.categoryBtn}>
-            <Martini color="black" size={moderateScale(24)} />
-            <Text style={styles.categoryText}>Hard Drinks</Text>
-          </TouchableOpacity>
-        </ScrollView>
-        <ChevronRight
-          color="black"
-          size={moderateScale(20)}
-          style={styles.arrowIcon}
-        />
-      </View>
+      <FoodCategoriesHeader />
 
       {/* --- Product List --- */}
       <ScrollView

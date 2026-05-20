@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 const { useNavigation } = require('@react-navigation/native');
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { COLORS } from '@/constants/theme';
+import { ButtonLarge } from '@/components';
 
 type DateTimeCardProps = {
   selectedDay: string;
@@ -49,13 +50,12 @@ const DateTimeCard = ({
 
       {/* Primary Action Button */}
       {showNextBtn && (
-        <TouchableOpacity
+        <ButtonLarge
+          variant="warning"
+          title="Next"
           style={styles.nextActionButton}
-          activeOpacity={0.9}
           onPress={() => navigation.navigate('TableFoodScreen')}
-        >
-          <Text style={styles.nextButtonText}>Next</Text>
-        </TouchableOpacity>
+        />
       )}
     </View>
   );
@@ -109,22 +109,12 @@ const styles = StyleSheet.create({
     color: '#222222',
   },
   nextActionButton: {
-    backgroundColor: '#FFCC00', // Gold/Yellow UI button color accent standard
-    width: '100%',
-    height: verticalScale(48),
-    borderRadius: moderateScale(24),
-    justifyContent: 'center',
-    alignItems: 'center',
+    maxWidth: '100%',
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 3,
-  },
-  nextButtonText: {
-    color: '#FFFFFF',
-    fontSize: moderateScale(20),
-    fontWeight: 'bold',
   },
 });
 

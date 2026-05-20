@@ -12,3 +12,5 @@ export { default as FedilityCardScreen } from './FedilityCardScreen';
 export { default as CategoriesScreen } from './CategoriesScreen';
 export { default as CategoryItemScreen } from './CategoryItemScreen';
 export { default as BuyingOptionScreen } from './BuyingOptionScreen';
+export { default as ConfirmCartScreen } from './ConfirmCartScreen';
+export { default as CheckoutScreen } from './CheckoutScreen';

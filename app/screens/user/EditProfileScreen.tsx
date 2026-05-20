@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 import { Plus } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
-import { GlowingSeparator, MobileHeader } from '@/components';
+import { GlowingSeparator, InputField, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
+import ProfilePhoto from './components/ProfilePhoto';
 
 const EditProfileScreen = () => {
   const [location, setLocation] = useState('');
@@ -30,23 +31,15 @@ const EditProfileScreen = () => {
         <Text style={styles.headerName}>John Doe</Text>
 
         {/* Change Profile Pic Avatar Wrapper */}
-        {/* <TouchableOpacity style={styles.avatarWrapper} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.avatarWrapper} activeOpacity={0.8}>
           <View style={styles.imageContainer}>
-            <Image
-              source={require('./assets/user_avatar.png')} // Replace with your local asset
-              style={styles.avatarImage}
-            />
-            <Image
-              source={require('./assets/yellow_blob_ring.png')}
-              style={styles.blobOverlay}
-              resizeMode="contain"
-            />
+            <ProfilePhoto />
             <View style={styles.plusOverlay}>
               <Plus size={moderateScale(28)} color="#FFFFFF" strokeWidth={3} />
             </View>
           </View>
           <Text style={styles.changePicText}>Change Profile Pic</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
 
       {/* --- Edit Fields Form --- */}
@@ -55,7 +48,7 @@ const EditProfileScreen = () => {
         showsVerticalScrollIndicator={false}
       >
         {/* Standard Info Inputs */}
-        <View style={styles.inputGroup}>
+        {/* <View style={styles.inputGroup}>
           <Text style={styles.inputLabel}>Edit Location</Text>
           <TextInput
             style={styles.input}
@@ -63,53 +56,42 @@ const EditProfileScreen = () => {
             onChangeText={setLocation}
             placeholderTextColor="#999999"
           />
-        </View>
+        </View> */}
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>Change Email</Text>
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            placeholderTextColor="#999999"
-          />
-        </View>
+        <InputField
+          placeholder="Edit Location"
+          value={location}
+          onChangeText={setLocation}
+        />
+        <InputField
+          placeholder="Change Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>BirthDay</Text>
-          <TextInput
-            style={styles.input}
-            value={birthday}
-            onChangeText={setBirthday}
-            placeholderTextColor="#999999"
-          />
-        </View>
+        <InputField
+          placeholder="BirthDay"
+          value={birthday}
+          onChangeText={setBirthday}
+        />
 
         {/* Shaded Password Section Container */}
         <View style={styles.passwordContainerBox}>
-          <View style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>Previous Password</Text>
-            <TextInput
-              style={styles.input}
-              value={prevPassword}
-              onChangeText={setPrevPassword}
-              secureTextEntry
-              placeholderTextColor="#999999"
-            />
-          </View>
+          <InputField
+            placeholder="Previous Password"
+            value={prevPassword}
+            onChangeText={setPrevPassword}
+            inputContainerStyle={{ backgroundColor: 'transparent' }}
+          />
 
-          <View style={styles.inputGroupSub}>
-            <Text style={styles.inputLabel}>New Password</Text>
-            <TextInput
-              style={styles.input}
-              value={newPassword}
-              onChangeText={setNewPassword}
-              secureTextEntry
-              placeholderTextColor="#999999"
-            />
-          </View>
+          <InputField
+            placeholder="New Password"
+            value={newPassword}
+            onChangeText={setNewPassword}
+            inputContainerStyle={{ backgroundColor: 'transparent' }}
+          />
         </View>
 
         {/* Submit Action Button */}
@@ -128,7 +110,6 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // Theme orange
-    // paddingTop: verticalScale(14),
     paddingBottom: verticalScale(15),
     alignItems: 'center',
     position: 'relative',
@@ -137,7 +118,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: moderateScale(16),
     fontWeight: '600',
-    marginBottom: verticalScale(15),
+    marginBottom: verticalScale(20),
   },
   avatarWrapper: {
     alignItems: 'center',

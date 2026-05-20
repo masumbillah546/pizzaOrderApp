@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { DollarSign } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
+import { COLORS } from '@/constants/theme';
 
 interface CheckoutSummaryHeroProps {
   itemCount?: number;
@@ -24,27 +25,48 @@ const CheckoutSummaryHero: React.FC<CheckoutSummaryHeroProps> = ({
 }) => {
   return (
     <View style={styles.outerMasterContainer}>
-      {/* --- SECTION 1: Top Brand Pastel Orange Aesthetic Accent Strip --- */}
-      <View style={styles.brandPastelOrangeStrip} />
-
       {/* --- SECTION 2: Core Yellow Dashboard Summary Matrix Board --- */}
       <View style={styles.yellowHeroDashboardCanvas}>
-        
         {/* Decorative Absolute Background Watermark Elements */}
-        <View style={[styles.watermarkWrapperPosition, styles.leftWatermarkPosition]}>
-          <DollarSign size={moderateScale(54)} color="#E2B734" strokeWidth={2.5} opacity={0.35} />
+        <View
+          style={[
+            styles.watermarkWrapperPosition,
+            styles.leftWatermarkPosition,
+          ]}
+        >
+          <DollarSign
+            size={moderateScale(54)}
+            color={COLORS.neutral[800]}
+            strokeWidth={2.5}
+            opacity={0.35}
+          />
         </View>
-        <View style={[styles.watermarkWrapperPosition, styles.rightWatermarkPosition]}>
-          <DollarSign size={moderateScale(64)} color="#E2B734" strokeWidth={2.5} opacity={0.35} />
+        <View
+          style={[
+            styles.watermarkWrapperPosition,
+            styles.rightWatermarkPosition,
+          ]}
+        >
+          <DollarSign
+            size={moderateScale(64)}
+            color={COLORS.neutral[800]}
+            strokeWidth={2.5}
+            opacity={0.35}
+          />
         </View>
 
         {/* Quantized Order Items Sub-Header Parameter String */}
         <Text style={styles.orderMetadataItemCounterText}>
-          Total Order <Text style={styles.parenthesesItemWeightText}>{`(${itemCount} Items)`}</Text>
+          Total Order{' '}
+          <Text
+            style={styles.parenthesesItemWeightText}
+          >{`(${itemCount} Items)`}</Text>
         </Text>
 
         {/* Grand Total Value Representation Frame */}
-        <Text style={styles.grandTotalNumericalDisplayText}>{`$${totalAmount}`}</Text>
+        <Text
+          style={styles.grandTotalNumericalDisplayText}
+        >{`$${totalAmount}`}</Text>
 
         {/* Core Screen Context Direct Action Trigger Button */}
         <TouchableOpacity
@@ -59,7 +81,7 @@ const CheckoutSummaryHero: React.FC<CheckoutSummaryHeroProps> = ({
       {/* --- SECTION 3: Structured Metadata Content Header Separator Row --- */}
       <View style={styles.orderSummaryContextHeaderRow}>
         <Text style={styles.sectionTitleAnchorLabelText}>ORDER SUMMARY</Text>
-        
+
         {/* Inline Secondary Modification Parameter Action Button */}
         <TouchableOpacity
           style={styles.greenChangeOrderInlineButton}
@@ -78,18 +100,12 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#FFFFFF',
   },
-  brandPastelOrangeStrip: {
-    backgroundColor: '#F4A472', // Core pastel orange application branding token profile
-    height: verticalScale(14),
-    width: '100%',
-  },
   /* --- Yellow Interactive Summary Dashboard Canvas Layout --- */
   yellowHeroDashboardCanvas: {
     backgroundColor: '#FFCC33', // Vivid layout gold-yellow background fill matrix matching specifications
     width: '100%',
     alignItems: 'center',
-    paddingTop: verticalScale(22),
-    paddingBottom: verticalScale(26),
+    paddingVertical: verticalScale(15),
     paddingHorizontal: scale(24),
     position: 'relative',
     overflow: 'hidden',
@@ -102,11 +118,11 @@ const styles = StyleSheet.create({
   },
   leftWatermarkPosition: {
     left: scale(-4),
-    bottom: verticalScale(12),
+    top: verticalScale(40),
   },
   rightWatermarkPosition: {
     right: scale(-2),
-    top: verticalScale(14),
+    top: verticalScale(50),
   },
   /* --- Hero Text Readouts Core Typographical Elements --- */
   orderMetadataItemCounterText: {
@@ -131,7 +147,7 @@ const styles = StyleSheet.create({
   greenCheckoutMainActionButton: {
     backgroundColor: '#00B300', // Signature active rich green action CTA indicator
     width: '100%',
-    height: verticalScale(48),
+    height: verticalScale(35),
     borderRadius: moderateScale(4),
     justifyContent: 'center',
     alignItems: 'center',
@@ -144,7 +160,7 @@ const styles = StyleSheet.create({
   },
   checkoutActionBtnLabelText: {
     color: '#FFFFFF',
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(16),
     fontWeight: '700',
     letterSpacing: 0.2,
   },

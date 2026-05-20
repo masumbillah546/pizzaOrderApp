@@ -25,12 +25,106 @@ interface CartState {
   [key: string]: number; // Tracks dynamic integer item counts mapped to IDs
 }
 
-const VARIANTS_DATA: PizzaVariant[] = [
-  { id: '1', name: 'The Original: Neapolitan', basePrice: 10, isPlusPrefix: true },
+export const VARIANTS_DATA: PizzaVariant[] = [
+  {
+    id: '1',
+    name: 'The Original: Neapolitan',
+    basePrice: 10,
+    isPlusPrefix: true,
+  },
   { id: '2', name: 'Chicago Deep Dish (and Stuffed)', basePrice: 10 },
   { id: '3', name: 'Detroit Style', basePrice: 10, isPrefixText: true },
   { id: '4', name: 'New England Greek', basePrice: 10 },
 ];
+
+export const RenderVariantItem = ({
+  item,
+  incrementQuantity,
+  decrementQuantity,
+  cart,
+}: {
+  item: PizzaVariant;
+  incrementQuantity: (id: string) => void;
+  decrementQuantity: (id: string) => void;
+  cart: CartState;
+}) => {
+  const quantity = cart[item.id] || 0;
+  const isActive = quantity > 0;
+  const computedRowSubtotal = item.basePrice * quantity;
+
+  return (
+    <View style={styles.itemRowWrapperFrame}>
+      {/* --- Top Sub-Row: Variant Identifier Title and Primary State Trigger --- */}
+      <View style={styles.variantPrimaryHeaderRow}>
+        <Text style={styles.variantLabelTitle}>{item.name}</Text>
+
+        {!isActive ? (
+          <View style={styles.unselectedPriceActionGroup}>
+            <Text
+              style={[
+                styles.priceTagText,
+                item.isPrefixText && styles.prefixGreenColor,
+              ]}
+            >
+              {item.isPrefixText && 'From '}
+              {item.isPlusPrefix && '+'}
+              {`$${item.basePrice}`}
+            </Text>
+            <TouchableOpacity
+              style={styles.orangePlusButtonHitbox}
+              activeOpacity={0.7}
+              onPress={() => incrementQuantity(item.id)}
+            >
+              <Plus size={moderateScale(16)} color="#FFFFFF" strokeWidth={3} />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.unselectedPriceActionGroup}>
+            <Text style={styles.priceTagText}>{`$${item.basePrice}`}</Text>
+            <TouchableOpacity
+              style={styles.orangePlusButtonHitbox}
+              activeOpacity={0.7}
+              onPress={() => incrementQuantity(item.id)}
+            >
+              <Plus size={moderateScale(16)} color="#FFFFFF" strokeWidth={3} />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+
+      {/* --- Lower Sub-Row: Expanded Selection Panel (Rendered if Item is Added) --- */}
+      {isActive && (
+        <View style={styles.expandedActiveBannerCard}>
+          {/* Active Display Integer Counter */}
+          <Text style={styles.activeCountIndicatorText}>{quantity}</Text>
+
+          <View style={styles.activeBannerRightCluster}>
+            {/* Green Confirmation Checkmark */}
+            <Check
+              size={moderateScale(16)}
+              color="#4CD964"
+              strokeWidth={3}
+              style={styles.rowCheckSpacing}
+            />
+            {/* Summed Aggregate Metric Value */}
+            <Text
+              style={styles.activeSubtotalValueText}
+            >{`+ $${computedRowSubtotal}`}</Text>
+
+            {/* Decrement Modification Button */}
+            <TouchableOpacity
+              style={styles.greyMinusButtonHitbox}
+              activeOpacity={0.7}
+              onPress={() => decrementQuantity(item.id)}
+            >
+              <Minus size={moderateScale(16)} color="#A5A5A5" strokeWidth={3} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+};
 
 interface CategoryItemScreenProps {
   isClosed?: boolean;
@@ -49,7 +143,7 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
 
   // Structural pricing calculation core
   const baseCalculatedTotal = Object.keys(cart).reduce((sum, key) => {
-    const variant = VARIANTS_DATA.find((v) => v.id === key);
+    const variant = VARIANTS_DATA.find(v => v.id === key);
     const quantity = cart[key];
     return sum + (variant ? variant.basePrice * quantity : 0);
   }, 0);
@@ -58,11 +152,11 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
   const displayTotal = baseCalculatedTotal > 0 ? baseCalculatedTotal : 50;
 
   const incrementQuantity = (id: string) => {
-    setCart((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    setCart(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
   };
 
   const decrementQuantity = (id: string) => {
-    setCart((prev) => {
+    setCart(prev => {
       const updated = { ...prev };
       if (updated[id] <= 1) {
         delete updated[id];
@@ -83,10 +177,15 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
         {/* --- Top Sub-Row: Variant Identifier Title and Primary State Trigger --- */}
         <View style={styles.variantPrimaryHeaderRow}>
           <Text style={styles.variantLabelTitle}>{item.name}</Text>
-          
+
           {!isActive ? (
             <View style={styles.unselectedPriceActionGroup}>
-              <Text style={[styles.priceTagText, item.isPrefixText && styles.prefixGreenColor]}>
+              <Text
+                style={[
+                  styles.priceTagText,
+                  item.isPrefixText && styles.prefixGreenColor,
+                ]}
+              >
                 {item.isPrefixText && 'From '}
                 {item.isPlusPrefix && '+'}
                 {`$${item.basePrice}`}
@@ -96,7 +195,11 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
                 activeOpacity={0.7}
                 onPress={() => incrementQuantity(item.id)}
               >
-                <Plus size={moderateScale(16)} color="#FFFFFF" strokeWidth={3} />
+                <Plus
+                  size={moderateScale(16)}
+                  color="#FFFFFF"
+                  strokeWidth={3}
+                />
               </TouchableOpacity>
             </View>
           ) : (
@@ -107,7 +210,11 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
                 activeOpacity={0.7}
                 onPress={() => incrementQuantity(item.id)}
               >
-                <Plus size={moderateScale(16)} color="#FFFFFF" strokeWidth={3} />
+                <Plus
+                  size={moderateScale(16)}
+                  color="#FFFFFF"
+                  strokeWidth={3}
+                />
               </TouchableOpacity>
             </View>
           )}
@@ -118,20 +225,31 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
           <View style={styles.expandedActiveBannerCard}>
             {/* Active Display Integer Counter */}
             <Text style={styles.activeCountIndicatorText}>{quantity}</Text>
-            
+
             <View style={styles.activeBannerRightCluster}>
               {/* Green Confirmation Checkmark */}
-              <Check size={moderateScale(16)} color="#4CD964" strokeWidth={3} style={styles.rowCheckSpacing} />
+              <Check
+                size={moderateScale(16)}
+                color="#4CD964"
+                strokeWidth={3}
+                style={styles.rowCheckSpacing}
+              />
               {/* Summed Aggregate Metric Value */}
-              <Text style={styles.activeSubtotalValueText}>{`+ $${computedRowSubtotal}`}</Text>
-              
+              <Text
+                style={styles.activeSubtotalValueText}
+              >{`+ $${computedRowSubtotal}`}</Text>
+
               {/* Decrement Modification Button */}
               <TouchableOpacity
                 style={styles.greyMinusButtonHitbox}
                 activeOpacity={0.7}
                 onPress={() => decrementQuantity(item.id)}
               >
-                <Minus size={moderateScale(16)} color="#A5A5A5" strokeWidth={3} />
+                <Minus
+                  size={moderateScale(16)}
+                  color="#A5A5A5"
+                  strokeWidth={3}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -157,7 +275,9 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
       <View style={styles.categoryMetaHeaderBlock}>
         <Text style={styles.categoryTitleText}>Pizza</Text>
         <Text style={styles.loremParagraphBody}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s,
         </Text>
         <View style={styles.topContentHorizontalDivider} />
       </View>
@@ -165,8 +285,16 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
       {/* --- Variants Interactive FlatList Matrix Canvas --- */}
       <FlatList
         data={VARIANTS_DATA}
-        renderItem={renderVariantItem}
-        keyExtractor={(item) => item.id}
+        // renderItem={renderVariantItem}
+        renderItem={({ item }) => (
+          <RenderVariantItem
+            item={item}
+            cart={cart}
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+          />
+        )}
+        keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollListPaddingBottomModifier}
       />
@@ -179,14 +307,20 @@ const CategoryItemScreen: React.FC<CategoryItemScreenProps> = ({
           onPress={() => onAddToBucketSubmit?.(displayTotal, cart)}
         >
           <View style={styles.innerBucketButtonLayout}>
-            <ShoppingBasket size={moderateScale(24)} color="#000000" strokeWidth={2} />
+            <ShoppingBasket
+              size={moderateScale(24)}
+              color="#000000"
+              strokeWidth={2}
+            />
             <Text style={styles.addBucketButtonTitleText}>Add to Bucket</Text>
           </View>
         </TouchableOpacity>
 
         <View style={styles.totalPriceMetricSummaryBox}>
           <Text style={styles.totalLabelSubtext}>Total</Text>
-          <Text style={styles.totalNumericCalculatedText}>{`$${displayTotal}`}</Text>
+          <Text
+            style={styles.totalNumericCalculatedText}
+          >{`$${displayTotal}`}</Text>
         </View>
       </View>
     </SafeAreaView>
@@ -197,11 +331,6 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-  },
-  brandingHeaderAccentBar: {
-    backgroundColor: '#F4A472', // Core application signature orange token
-    height: verticalScale(40),
-    width: '100%',
   },
   closedNotificationBanner: {
     backgroundColor: '#8E6E53', // Deep clay structural operation banner color matching specifications
@@ -311,7 +440,7 @@ const styles = StyleSheet.create({
   activeSubtotalValueText: {
     fontSize: moderateScale(14),
     fontWeight: 'bold',
-    color: '#4CD964', // Running dynamic variant row price calculation tracker 
+    color: '#4CD964', // Running dynamic variant row price calculation tracker
     marginRight: scale(18),
   },
   greyMinusButtonHitbox: {

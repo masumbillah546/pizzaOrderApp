@@ -37,7 +37,7 @@ export default function AppText({
 
 const styles = StyleSheet.create({
   text: {
-    color: COLORS.neutral[600],
+    color: COLORS.neutral[800],
     fontSize: FontSizes.sm,
     lineHeight: FontSizes.sm * 1.6, // 1.5
     fontFamily: 'Poppins-Regular',

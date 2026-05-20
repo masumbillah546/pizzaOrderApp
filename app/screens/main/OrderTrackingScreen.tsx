@@ -7,10 +7,11 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-import { Check, Clock, Circle } from 'lucide-react-native';
+import { Check, Clock, Circle, Home } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
+import ProgressRing from './components/ProgressRing';
 
 // --- Types ---
 interface TimelineStep {
@@ -57,10 +58,11 @@ const TRACKING_STEPS: TimelineStep[] = [
   },
 ];
 
-const OrderTrackingScreen = () => {
+const OrderTrackingScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="Order Tracking" />
+      <MobileHeader  leftIcon={<Home size={moderateScale(24)} color="white" />}
+        onLeftPress={() => navigation.navigate('HomeScreen')} title="Order Tracking" onMenu={() => {}}/>
       <View style={styles.header}>
         <GlowingSeparator />
         <Text style={styles.headerTitle}>
@@ -75,13 +77,7 @@ const OrderTrackingScreen = () => {
         {/* --- Timer Block --- */}
         <View style={styles.timerContainer}>
           {/* Circular Countdown Ring Graphic Element */}
-          <View style={styles.outerProgressRing}>
-            <View style={styles.innerYellowCircle}>
-              <Text style={styles.timerDigits}>
-                40 <Text style={styles.timerLabel}>Min</Text>
-              </Text>
-            </View>
-          </View>
+          <ProgressRing />
 
           {/* Time Context Text Rows */}
           <View style={styles.timeContextBlock}>
@@ -213,36 +209,7 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(35),
     backgroundColor: '#FFFFFF',
   },
-  outerProgressRing: {
-    width: scale(115),
-    height: scale(115),
-    borderRadius: scale(57.5),
-    backgroundColor: '#FFFFFF',
-    borderWidth: scale(5),
-    borderColor: '#F4A472', // Simulated outer border arc ring matching mockup layout
-    borderLeftColor: 'transparent', // Leaves the bottom-left gap open
-    justifyContent: 'center',
-    alignItems: 'center',
-    transform: [{ rotate: '45deg' }], // Matches asymmetrical angle displacement
-  },
-  innerYellowCircle: {
-    width: scale(92),
-    height: scale(92),
-    borderRadius: scale(46),
-    backgroundColor: '#FFCC00', // Central yellow dial fill
-    justifyContent: 'center',
-    alignItems: 'center',
-    transform: [{ rotate: '-45deg' }], // Counter-rotates internal typography straight
-  },
-  timerDigits: {
-    color: '#FFFFFF',
-    fontSize: moderateScale(26),
-    fontWeight: 'bold',
-  },
-  timerLabel: {
-    fontSize: moderateScale(15),
-    fontWeight: '400',
-  },
+
   timeContextBlock: {
     marginLeft: scale(25),
     justifyContent: 'center',

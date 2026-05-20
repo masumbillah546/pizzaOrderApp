@@ -212,9 +212,13 @@ const CheckoutScreen = ({ navigation }: { navigation: any }) => {
         contentContainerStyle={styles.scrollListPaddingBottomModifier}
       />
       <PaymentModal
+        totalPrice={displayTotal}
         visible={paymentModal}
         onClose={() => setShowPaymentModal(false)}
-        onConfirm={() => setShowPaymentModal(false)}
+        onConfirm={() => {
+          setShowPaymentModal(false)
+          navigation.navigate('PickupTimeScreen')
+        }}
       />
     </SafeAreaView>
   );

@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 const { useNavigation } = require('@react-navigation/native');
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
-import { COLORS } from '@/constants/theme';
-import { ButtonLarge } from '@/components';
+import { COLORS, FontSizes } from '@/constants/theme';
+import { AppText, ButtonLarge, Row } from '@/components';
 
 type DateTimeCardProps = {
   selectedDay: string;
@@ -13,6 +13,7 @@ type DateTimeCardProps = {
   selectedPeriod: string;
   guests: string;
   showNextBtn?: boolean;
+  showCartItem?: boolean;
 };
 
 const DateTimeCard = ({
@@ -23,12 +24,31 @@ const DateTimeCard = ({
   selectedPeriod,
   guests,
   showNextBtn = true,
+  showCartItem = false,
 }: DateTimeCardProps) => {
   const navigation = useNavigation();
   return (
     <View
       style={{ position: 'absolute', width: '90%', gap: verticalScale(15) }}
     >
+      {showCartItem && (
+        <Row style={styles.subTotal}>
+          <AppText
+            style={{ fontSize: FontSizes.xl, color: COLORS.neutral[800] }}
+          >
+            Your Cart 5 Items
+          </AppText>
+          <AppText
+            style={{
+              fontSize: FontSizes.xxxl,
+              color: COLORS.neutral[800],
+              fontWeight: 'bold',
+            }}
+          >
+            $50
+          </AppText>
+        </Row>
+      )}
       <View style={styles.transparentPreviewCard}>
         <Text style={styles.previewTimeLabel}>
           {selectedHour === '12'
@@ -68,6 +88,13 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(16),
     alignItems: 'center',
     zIndex: 2,
+  },
+  subTotal: {
+    paddingHorizontal: scale(15),
+    gap: scale(10),
+    justifyContent: 'space-between',
+    backgroundColor: COLORS.warning[400],
+    marginBottom: -verticalScale(10),
   },
   previewTimeLabel: {
     fontSize: moderateScale(14),

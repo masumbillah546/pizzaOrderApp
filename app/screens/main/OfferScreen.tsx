@@ -71,7 +71,9 @@ const OffersScreen = () => {
           <View key={item.id} style={styles.cardContainer}>
             {/* --- Image Banner with Overlay Text & Button --- */}
             <ImageBackground
-              source={item.image}
+              source={{
+                uri: 'https://www.schwartz.co.uk/-/media/project/oneweb/schwartz/recipes/recipe_image_update/march_18_2025/easy_pizza_recipe_800x800.webp?rev=217b39d7488a4aa7947174d6e475219f&vd=20250325T174436Z&extension=webp&hash=36F310B7BA2EA4491AADEC213844DF8B',
+              }}
               style={styles.bannerImage}
               resizeMode="cover"
             >

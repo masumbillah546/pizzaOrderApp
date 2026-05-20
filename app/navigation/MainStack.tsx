@@ -30,6 +30,7 @@ import {
   TableFoodScreen,
   ConfirmCartScreen,
   CheckoutScreen,
+  PickupTimeScreen,
 } from '@/screens';
 //
 import { COLORS, FontSizes } from '@/constants/theme';
@@ -118,9 +119,14 @@ export default function MainStack() {
         component={ConfirmCartScreen}
         // options={{ title: 'Messages' }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="CheckoutScreen"
         component={CheckoutScreen}
+        // options={{ title: 'Messages' }}
+      />
+      <Drawer.Screen
+        name="PickupTimeScreen"
+        component={PickupTimeScreen}
         // options={{ title: 'Messages' }}
       />
       <Drawer.Screen

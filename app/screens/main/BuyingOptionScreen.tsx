@@ -45,13 +45,13 @@ const BuyingOptionScreen: React.FC<BuyingOptionScreenProps> = ({
             variant="warning"
             style={styles.btn}
             title={'Delivery'}
-            onPress={() => navigation.navigate('TableFoodScreen')}
+            // onPress={() => navigation.navigate('TableFoodScreen')}
           />
 
           <ButtonLarge
             style={styles.btn}
             title={'Pickup'}
-            onPress={() => navigation.navigate('TableFoodScreen')}
+            // onPress={() => navigation.navigate('TableFoodScreen')}
           />
         </View>
       </ImageBackground>

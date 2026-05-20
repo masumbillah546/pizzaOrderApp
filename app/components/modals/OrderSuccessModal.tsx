@@ -1,24 +1,21 @@
 import React from 'react';
-import {
-  Modal,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
+import TableCloth from '@/screens/main/components/TableCloth';
 
 // --- Types ---
 interface SuccessModalProps {
   visible: boolean;
   orderId: string;
   onClose: () => void;
+  forTable?: boolean;
 }
 
-const OrderSuccessModal: React.FC<SuccessModalProps> = ({ 
-  visible = true, 
-  orderId = 'D5FX2', 
-  onClose 
+const OrderSuccessModal: React.FC<SuccessModalProps> = ({
+  visible = true,
+  orderId = 'D5FX2',
+  onClose,
+  forTable = false,
 }) => {
   return (
     <Modal
@@ -29,10 +26,14 @@ const OrderSuccessModal: React.FC<SuccessModalProps> = ({
     >
       {/* Dimmed Backdrop Layer Overlay */}
       <View style={styles.backdropOverlay}>
-        
         {/* Central White Modal Container Card */}
         <View style={styles.modalCard}>
-          
+          {forTable && (
+            <View style={styles.ginghamFooterContainer}>
+              <TableCloth />
+            </View>
+          )}
+
           {/* Main Header Title Text */}
           <Text style={styles.congratulationText}>Congratulation</Text>
 
@@ -62,14 +63,13 @@ const OrderSuccessModal: React.FC<SuccessModalProps> = ({
           </Text>
 
           {/* Golden Yellow Interactive Confirmation CTA Button */}
-          <TouchableOpacity 
-            style={styles.thanksButton} 
+          <TouchableOpacity
+            style={styles.thanksButton}
             activeOpacity={0.8}
             onPress={onClose}
           >
             <Text style={styles.thanksButtonText}>Thanks</Text>
           </TouchableOpacity>
-
         </View>
       </View>
     </Modal>
@@ -84,8 +84,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: scale(35),
   },
+  ginghamFooterContainer: {
+    width: '130%',
+    flexGrow: 1,
+    aspectRatio: 5 / 4,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F7F7F7',
+    overflow: 'hidden',
+  },
   modalCard: {
     width: '100%',
+    overflow: 'hidden',
     backgroundColor: '#FFFFFF',
     borderRadius: moderateScale(4),
     paddingHorizontal: scale(25),

@@ -153,7 +153,7 @@ const ConfirmCartScreen = ({ navigation }: { navigation: any }) => {
       />
       <View style={styles.ginghamFooterContainer}>
         <TableCloth />
-        <Row style={styles.subTotal}>
+        {/* <Row style={styles.subTotal}>
           <AppText
             style={{ fontSize: FontSizes.xl, color: COLORS.neutral[800] }}
           >
@@ -168,7 +168,7 @@ const ConfirmCartScreen = ({ navigation }: { navigation: any }) => {
           >
             $50
           </AppText>
-        </Row>
+        </Row> */}
         <DateTimeCard
           selectedDay={'12'}
           selectedMonth={'Aug'}
@@ -177,6 +177,7 @@ const ConfirmCartScreen = ({ navigation }: { navigation: any }) => {
           selectedPeriod={''}
           guests={'4'}
           showNextBtn={false}
+          showCartItem
         />
       </View>
 

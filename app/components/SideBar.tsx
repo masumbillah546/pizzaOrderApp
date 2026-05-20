@@ -18,7 +18,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const menuItems = [
   { title: 'Main Menu', screen: 'CategoriesScreen' },
-  { title: 'Food Tracking', screen: 'HomeScreen' },
+  { title: 'Food Tracking', screen: 'OrderTrackingScreen' },
   { title: 'Offer', screen: 'OfferScreen' },
   { title: 'Order Now', screen: 'HomeScreen' },
   { title: 'Cart', screen: 'CartScreen' },

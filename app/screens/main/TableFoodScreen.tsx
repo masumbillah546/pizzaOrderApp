@@ -6,6 +6,7 @@ import { COLORS, Shadows } from '@/constants/theme';
 import TableCloth from './components/TableCloth';
 import DateTimeCard from './components/DateTimeCard';
 import { FOOD_DATA, FoodCategoriesHeader, PizzaCard } from './HomeScreen';
+import OrderSuccessModal from '@/components/modals/OrderSuccessModal';
 
 const TableFoodScreen = ({ navigation }) => {
   // Picker states tracking indices corresponding to mockup centers
@@ -15,6 +16,7 @@ const TableFoodScreen = ({ navigation }) => {
   const [selectedHour, setSelectedHour] = useState('12');
   const [selectedPeriod, setSelectedPeriod] = useState('AM');
   const [guests, setGuests] = useState('4 People');
+  const [successModal, setSuccessModal] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,8 +52,17 @@ const TableFoodScreen = ({ navigation }) => {
           alignSelf: 'center',
           // opacity: 0.8,
         }}
-        onPress={() => navigation.navigate('BuyingOptionScreen')}
+        onPress={() => {
+          // navigation.navigate('BuyingOptionScreen')
+          setSuccessModal(true);
+        }}
         title="Buy Now!!"
+      />
+      <OrderSuccessModal
+        orderId="45454"
+        visible={successModal}
+        onClose={() => setSuccessModal(false)}
+        forTable
       />
     </SafeAreaView>
   );

@@ -69,7 +69,7 @@ const EditProfileScreen = () => {
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
+        keyboardDismissMode="interactive"
         contentInsetAdjustmentBehavior="automatic"
         automaticallyAdjustKeyboardInsets={false}
       >

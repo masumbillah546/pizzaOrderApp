@@ -85,7 +85,9 @@ const NotificationScreen = ({ navigation }: { navigation: any }) => {
           <View key={item.id} style={styles.card}>
             {/* Left Thumbnail Profile */}
             <Image
-              source={item.image}
+              source={{
+                uri: 'https://static.vecteezy.com/system/resources/previews/054/680/000/non_2x/pizza-slice-with-colorful-toppings-and-crispy-crust-high-resolution-food-photography-free-png.png',
+              }}
               style={styles.thumbImage}
               resizeMode="cover"
             />

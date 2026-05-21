@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: scale(25),
-    paddingVertical: verticalScale(35),
+    paddingVertical: verticalScale(20),
     backgroundColor: '#FFFFFF',
   },
 
@@ -250,14 +250,13 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     flexDirection: 'row',
-    minHeight: verticalScale(65),
+    minHeight: verticalScale(55),
   },
   lineIndicatorColumn: {
     alignItems: 'center',
     width: scale(24),
   },
   iconWrapper: {
-    height: verticalScale(22),
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 2,
@@ -273,7 +272,6 @@ const styles = StyleSheet.create({
     width: scale(2),
     flex: 1,
     backgroundColor: '#5A5A5A', // Inactive base track color
-    marginVertical: verticalScale(2),
   },
   completedLine: {
     backgroundColor: '#FFCC00', // Active line matching step 2 boundary link highlights
@@ -281,7 +279,7 @@ const styles = StyleSheet.create({
   stepInfoColumn: {
     flex: 1,
     marginLeft: scale(15),
-    paddingTop: verticalScale(1),
+    marginTop: - verticalScale(1),
   },
   stepTitle: {
     fontSize: moderateScale(15),
@@ -303,8 +301,8 @@ const styles = StyleSheet.create({
     color: '#777777', // Dimmed text palette for upcoming stages
   },
   finishBtn: {
-    marginTop: 'auto',
-    paddingVertical: verticalScale(15),
+    // marginTop: 'auto',
+    // paddingVertical: verticalScale(15),
     alignItems: 'flex-start',
   },
   finishBtnText: {

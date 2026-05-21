@@ -19,7 +19,7 @@ import {
 } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
-import { GlowingSeparator, MobileHeader } from '@/components';
+import { ButtonLarge, GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
 
 // --- Types ---
@@ -162,19 +162,17 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
 
       {/* --- Bottom Action Buttons --- */}
       <View style={styles.footer}>
-        <TouchableOpacity
-          style={[styles.actionButton, styles.deliveryBtn]}
+        <ButtonLarge
+          title="DELIVERY"
           onPress={() => navigation.navigate('ConfirmCartScreen')}
-        >
-          <Text style={styles.btnText}>DILEVERY</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.actionButton, styles.pickupBtn]}
+          style={styles.actionButton}
+        />
+        <ButtonLarge
+          variant="warning"
+          title="PICK UP"
           onPress={() => navigation.navigate('ConfirmCartScreen')}
-        >
-          <Text style={styles.btnText}>PICK UP</Text>
-        </TouchableOpacity>
+          style={styles.actionButton}
+        />
       </View>
     </View>
   );
@@ -295,26 +293,11 @@ const styles = StyleSheet.create({
   actionButton: {
     flex: 0.47,
     height: verticalScale(50),
-    borderRadius: moderateScale(25),
-    justifyContent: 'center',
-    alignItems: 'center',
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-  },
-  deliveryBtn: {
-    backgroundColor: '#F4A472',
-  },
-  pickupBtn: {
-    backgroundColor: '#FFCC00',
-  },
-  btnText: {
-    color: 'white',
-    fontSize: moderateScale(16),
-    fontWeight: 'bold',
-    letterSpacing: 0.5,
   },
 });
 

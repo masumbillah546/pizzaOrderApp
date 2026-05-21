@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Utensils, X } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
+import { ButtonLarge } from '../buttonComponents';
 
 // --- Types ---
 interface PaymentModalProps {
@@ -39,13 +40,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     >
       {/* Background Backdrop Tint Filter Overlay */}
       <View style={styles.backdropOverlay}>
-        
         {/* Core White Content Base Window Card */}
         <View style={styles.modalCard}>
-          
           {/* Floating Top Right Round Dismiss Icon Anchor Button */}
-          <TouchableOpacity 
-            style={styles.floatingCloseCircle} 
+          <TouchableOpacity
+            style={styles.floatingCloseCircle}
             activeOpacity={0.8}
             onPress={onClose}
           >
@@ -54,7 +53,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
           {/* Header Metric Row Container */}
           <View style={styles.headerInfoRow}>
-            <Utensils size={moderateScale(22)} color="#333333" style={styles.headerIcon} />
+            <Utensils
+              size={moderateScale(22)}
+              color="#333333"
+              style={styles.headerIcon}
+            />
             <Text style={styles.headerTitleLabel}>Total Price</Text>
           </View>
 
@@ -67,25 +70,29 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           {/* --- SECTION 1: Radio Selection Toggle Group --- */}
           <View style={styles.radioGroupSection}>
             {/* Cash Selector Variant Row */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.radioOptionRow}
               activeOpacity={0.7}
               onPress={() => setPaymentMethod('cash')}
             >
               <View style={styles.radioOuterRing}>
-                {paymentMethod === 'cash' && <View style={styles.radioInnerFill} />}
+                {paymentMethod === 'cash' && (
+                  <View style={styles.radioInnerFill} />
+                )}
               </View>
               <Text style={styles.radioOptionLabelText}>Cash Payment</Text>
             </TouchableOpacity>
 
             {/* Card Selector Variant Row */}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.radioOptionRow}
               activeOpacity={0.7}
               onPress={() => setPaymentMethod('card')}
             >
               <View style={styles.radioOuterRing}>
-                {paymentMethod === 'card' && <View style={styles.radioInnerFill} />}
+                {paymentMethod === 'card' && (
+                  <View style={styles.radioInnerFill} />
+                )}
               </View>
               <Text style={styles.radioOptionLabelText}>Card Payment</Text>
             </TouchableOpacity>
@@ -129,7 +136,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                   editable={paymentMethod === 'card'}
                 />
               </View>
-              
+
               <View style={styles.fieldWrapperSplit}>
                 <TextInput
                   style={styles.underlinedInputField}
@@ -147,25 +154,18 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
           {/* --- SECTION 3: Action Control Footer Row Elements --- */}
           <View style={styles.actionButtonFooterRow}>
-            {/* Cancel Trigger Anchor Accent Box */}
-            <TouchableOpacity 
-              style={[styles.baseActionBtn, styles.backToCartBtn]} 
-              activeOpacity={0.8}
+            <ButtonLarge
+              title="Back to Cart"
               onPress={onClose}
-            >
-              <Text style={styles.backToCartBtnText}>Back to Cart</Text>
-            </TouchableOpacity>
-
-            {/* Confirmation Active Golden Trigger Button */}
-            <TouchableOpacity 
-              style={[styles.baseActionBtn, styles.okConfirmBtn]} 
-              activeOpacity={0.8}
+              style={styles.baseActionBtn}
+            />
+            <ButtonLarge
+              variant="warning"
+              title="Ok"
               onPress={() => onConfirm?.(paymentMethod)}
-            >
-              <Text style={styles.okConfirmBtnText}>Ok</Text>
-            </TouchableOpacity>
+              style={styles.baseActionBtn}
+            />
           </View>
-
         </View>
       </View>
     </Modal>
@@ -307,30 +307,11 @@ const styles = StyleSheet.create({
   baseActionBtn: {
     width: '46%',
     height: verticalScale(44),
-    borderRadius: moderateScale(22),
-    justifyContent: 'center',
-    alignItems: 'center',
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-  },
-  backToCartBtn: {
-    backgroundColor: '#F4A472', // UI Soft Orange Primary styling parameters
-  },
-  backToCartBtnText: {
-    color: '#FFFFFF',
-    fontSize: moderateScale(14),
-    fontWeight: 'bold',
-  },
-  okConfirmBtn: {
-    backgroundColor: '#FFCC00', // UI Golden Core Button selection styling rules
-  },
-  okConfirmBtnText: {
-    color: '#FFFFFF',
-    fontSize: moderateScale(15),
-    fontWeight: 'bold',
   },
 });
 

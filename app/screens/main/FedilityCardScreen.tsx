@@ -8,15 +8,7 @@ import {
   Dimensions,
   ImageBackground,
 } from 'react-native';
-import {
-  Check,
-  X,
-  Pizza,
-  Wine,
-  Drumstick,
-  Strawberry,
-  GlassWater,
-} from 'lucide-react-native';
+import { Check, X, Pizza } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
@@ -64,7 +56,7 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
         {/* Central Reward Hero Display Graphic Element */}
         <View style={styles.heroGraphicContainer}>
           <Pizza
-            size={scale(160)}
+            size={moderateScale(160)}
             color="#F4A472"
             strokeWidth={1.5}
             style={styles.pizzaMainGraphic}
@@ -92,7 +84,7 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
                     >
                       <View style={styles.greenCheckBadgeCircle}>
                         <Check
-                          size={moderateScale(12)}
+                          size={moderateScale(16)}
                           color="#FFFFFF"
                           strokeWidth={4}
                         />
@@ -108,8 +100,8 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
                     >
                       <View style={styles.grayCrossBadgeCircle}>
                         <X
-                          size={moderateScale(12)}
-                          color="#FFFFFF"
+                          size={moderateScale(16)}
+                          color="red"
                           strokeWidth={4}
                         />
                       </View>
@@ -229,6 +221,7 @@ const styles = StyleSheet.create({
   },
   activeStampCompletedShadow: {
     borderColor: '#4CD964', // Success green border trace line logic anchor
+    borderStyle: 'dashed',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -237,6 +230,7 @@ const styles = StyleSheet.create({
   },
   inactiveStampPlaceholder: {
     borderColor: '#A0A0A0', // Gray dashed layout boundary style fallback rules
+    borderStyle: 'dashed',
     backgroundColor: '#EAEAEA',
   },
   greenCheckBadgeCircle: {

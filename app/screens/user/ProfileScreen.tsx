@@ -9,8 +9,6 @@ import {
   SafeAreaView,
   ImageBackground,
 } from 'react-native';
-import Svg, { Path, Defs, ClipPath, Image as SvgImage } from 'react-native-svg';
-
 import { MapPin, ChevronRight, Clock } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
@@ -19,7 +17,7 @@ import { COLORS } from '@/constants/theme';
 import ProfilePhoto from './components/ProfilePhoto';
 
 const ProfileScreen = ({ navigation }) => {
-  const menuItems = ['PROFILE EDIT', 'MY HISTORY', 'FEDILITY PROFILE'];
+  const menuItems = [['PROFILE EDIT', 'ProfileEditScreen'], ['MY HISTORY', 'OrderHistoryScreen'], ['FEDILITY PROFILE', 'FedilityCardScreen']];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,6 +38,20 @@ const ProfileScreen = ({ navigation }) => {
           style={styles.bannerContainer}
           tintColor={'black'}
         >
+          {/* The glowing beam using LinearGradient */}
+          <LinearGradient
+            start={{ x: 1, y: 0 }}
+            end={{ x: 0, y: 0 }}
+            useAngle
+            // angleCenter={{ x: 0, y: 0 }}
+            // angle={5}
+            colors={[
+              'rgb(54, 43, 11)', // Transparent start
+              'rgb(129, 77, 8)', // Solid white center
+              'rgb(54, 43, 11)', // Transparent end
+            ]}
+            style={{height: '100%', width: '100%', position: 'absolute'}}
+          />
           <ProfilePhoto navigation={navigation} />
 
           {/* Location Identifier */}
@@ -71,9 +83,9 @@ const ProfileScreen = ({ navigation }) => {
               <TouchableOpacity
                 key={index}
                 style={styles.menuButton}
-                onPress={() => navigation.navigate('ProfileEditScreen')}
+                onPress={() => navigation.navigate(item[1])}
               >
-                <Text style={styles.menuButtonText}>{item}</Text>
+                <Text style={styles.menuButtonText}>{item[0]}</Text>
                 <ChevronRight size={moderateScale(24)} color="#FFFFFF" />
               </TouchableOpacity>
             ))}

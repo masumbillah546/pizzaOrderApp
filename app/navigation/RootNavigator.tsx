@@ -21,7 +21,7 @@ export default function RootNavigator() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'white' }}>
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
+      <StatusBar barStyle="light-content" backgroundColor={COLORS.transparent} translucent />
       <NavigationContainer ref={navigationRef} onReady={() => {}}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen

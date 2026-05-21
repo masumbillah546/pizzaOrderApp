@@ -37,9 +37,9 @@ const ReceiptRow = ({ label, value }: ReceiptRowProps) => {
 const OrderDetailsScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="ORDER DETAIL" />
+      <MobileHeader title="ORDER DETAIL" onMenu={() => {}} />
+      <GlowingSeparator />
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerTitle}>
           Your Order ID : <Text style={styles.boldText}>D5FX2</Text>
         </Text>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // Primary Brand Orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     justifyContent: 'center',
     alignItems: 'center',
   },

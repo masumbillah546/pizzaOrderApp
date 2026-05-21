@@ -184,7 +184,7 @@ const CheckoutScreen = ({ navigation }: { navigation: any }) => {
     });
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <MobileHeader
         title="CART"
         onMenu={() => {}}
@@ -220,7 +220,7 @@ const CheckoutScreen = ({ navigation }: { navigation: any }) => {
           navigation.navigate('PickupTimeScreen')
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

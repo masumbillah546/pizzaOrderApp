@@ -29,9 +29,9 @@ const BuyingOptionScreen: React.FC<BuyingOptionScreenProps> = ({
     <SafeAreaView style={styles.screenContainer}>
       <MobileHeader title="BUY NOW" onMenu={() => {}} />
 
+      <GlowingSeparator />
       {/* --- HEADER BLOCK --- */}
       <View style={styles.promoHeaderBar}>
-        <GlowingSeparator />
         <Text style={styles.headerPrimaryText}>Choose your Method</Text>
         <Text style={styles.headerSecondaryText}>
           Delivery cost will be added
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   /* --- Promo Header Box Styles --- */
   promoHeaderBar: {
     backgroundColor: COLORS.theme, // Exact application orange theme profile color token
-    paddingBottom: verticalScale(14),
+    paddingVertical: verticalScale(14),
     alignItems: 'center',
     justifyContent: 'center',
   },

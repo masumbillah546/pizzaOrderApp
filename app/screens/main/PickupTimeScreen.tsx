@@ -29,8 +29,8 @@ const PickupTimeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MobileHeader title="PICK UP TIME" />
+      <GlowingSeparator />
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerTitle}>Thank for your patience</Text>
       </View>
 
@@ -38,10 +38,23 @@ const PickupTimeScreen = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        <AppText style={{fontSize: FontSizes.md}}>Your Order ID: <AppText style={{color: COLORS.error[900]}}>D5FX2</AppText></AppText>
-        <AppText style={{fontSize: moderateScale(18), fontWeight: '700'}}>Thanks You!!</AppText>
+        <AppText style={{ fontSize: FontSizes.md }}>
+          Your Order ID:{' '}
+          <AppText style={{ color: COLORS.error[900] }}>D5FX2</AppText>
+        </AppText>
+        <AppText style={{ fontSize: moderateScale(18), fontWeight: '700' }}>
+          Thanks You!!
+        </AppText>
         <ProgressRingLarge />
-        <AppText style={{fontSize: moderateScale(13), fontWeight: '700', textAlign: 'center', maxWidth: '90%', marginTop: verticalScale(20)}}>
+        <AppText
+          style={{
+            fontSize: moderateScale(13),
+            fontWeight: '700',
+            textAlign: 'center',
+            maxWidth: '90%',
+            marginTop: verticalScale(20),
+          }}
+        >
           Please wait, we get your message and get your food within 20 minuets
         </AppText>
 
@@ -67,7 +80,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // Primary Brand Orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     justifyContent: 'center',
     alignItems: 'center',
   },

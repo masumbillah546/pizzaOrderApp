@@ -70,8 +70,8 @@ const NotificationScreen = ({ navigation }: { navigation: any }) => {
     <SafeAreaView style={styles.container}>
       {/* --- Header Section --- */}
       <MobileHeader title="MESSAGE" onMenu={() => {}} />
+      <GlowingSeparator />
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerTitle}>You have 4 Message</Text>
         <Text style={styles.headerSubtitle}>4 Unread</Text>
       </View>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // UI Theme orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     alignItems: 'center',
     position: 'relative',
   },

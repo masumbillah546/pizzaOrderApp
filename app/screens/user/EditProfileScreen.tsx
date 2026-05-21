@@ -3,15 +3,20 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
-  SafeAreaView,
+  KeyboardAvoidingView,
   ScrollView,
-  Image,
+  Keyboard,
+  Platform,
 } from 'react-native';
 import { Plus } from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
-import { GlowingSeparator, InputField, MobileHeader } from '@/components';
+import {
+  ButtonLarge,
+  GlowingSeparator,
+  InputField,
+  MobileHeader,
+} from '@/components';
 import { COLORS } from '@/constants/theme';
 import ProfilePhoto from './components/ProfilePhoto';
 
@@ -21,85 +26,117 @@ const EditProfileScreen = () => {
   const [birthday, setBirthday] = useState('');
   const [prevPassword, setPrevPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  const handleKeyboardShow = (event: any) => {
+    setKeyboardHeight(event.endCoordinates.height);
+  };
+
+  const handleKeyboardHide = () => {
+    setKeyboardHeight(0);
+  };
+
+  React.useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      handleKeyboardShow,
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      handleKeyboardHide,
+    );
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAvoidingView
+      style={[styles.container]}
+      behavior={
+        Platform.OS === 'ios'
+          ? 'padding'
+          : keyboardHeight > 0
+          ? 'height'
+          : undefined
+      }
+    >
       <MobileHeader title="PROFILE EDIT" onMenu={() => {}} />
-      <View style={styles.header}>
-        <GlowingSeparator />
-
-        <Text style={styles.headerName}>John Doe</Text>
-
-        {/* Change Profile Pic Avatar Wrapper */}
-        <TouchableOpacity style={styles.avatarWrapper} activeOpacity={0.8}>
-          <View style={styles.imageContainer}>
-            <ProfilePhoto />
-            <View style={styles.plusOverlay}>
-              <Plus size={moderateScale(28)} color="#FFFFFF" strokeWidth={3} />
-            </View>
-          </View>
-          <Text style={styles.changePicText}>Change Profile Pic</Text>
-        </TouchableOpacity>
-      </View>
-
+      <GlowingSeparator />
       {/* --- Edit Fields Form --- */}
       <ScrollView
-        contentContainerStyle={styles.formContainer}
+        contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        contentInsetAdjustmentBehavior="automatic"
+        automaticallyAdjustKeyboardInsets={false}
       >
-        {/* Standard Info Inputs */}
-        {/* <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>Edit Location</Text>
-          <TextInput
-            style={styles.input}
+        <View style={styles.header}>
+          <Text style={styles.headerName}>John Doe</Text>
+
+          {/* Change Profile Pic Avatar Wrapper */}
+          <TouchableOpacity style={styles.avatarWrapper} activeOpacity={0.8}>
+            <View style={styles.imageContainer}>
+              <ProfilePhoto />
+              <View style={styles.plusOverlay}>
+                <Plus
+                  size={moderateScale(28)}
+                  color="#FFFFFF"
+                  strokeWidth={3}
+                />
+              </View>
+            </View>
+            <Text style={styles.changePicText}>Change Profile Pic</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.formContainer}>
+          <InputField
+            placeholder="Edit Location"
             value={location}
             onChangeText={setLocation}
-            placeholderTextColor="#999999"
           />
-        </View> */}
-
-        <InputField
-          placeholder="Edit Location"
-          value={location}
-          onChangeText={setLocation}
-        />
-        <InputField
-          placeholder="Change Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-
-        <InputField
-          placeholder="BirthDay"
-          value={birthday}
-          onChangeText={setBirthday}
-        />
-
-        {/* Shaded Password Section Container */}
-        <View style={styles.passwordContainerBox}>
           <InputField
-            placeholder="Previous Password"
-            value={prevPassword}
-            onChangeText={setPrevPassword}
-            inputContainerStyle={{ backgroundColor: 'transparent' }}
+            placeholder="Change Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
 
           <InputField
-            placeholder="New Password"
-            value={newPassword}
-            onChangeText={setNewPassword}
-            inputContainerStyle={{ backgroundColor: 'transparent' }}
+            placeholder="BirthDay"
+            value={birthday}
+            onChangeText={setBirthday}
+          />
+
+          {/* Shaded Password Section Container */}
+          <View style={styles.passwordContainerBox}>
+            <InputField
+              placeholder="Previous Password"
+              value={prevPassword}
+              onChangeText={setPrevPassword}
+              inputContainerStyle={{ backgroundColor: 'transparent' }}
+            />
+
+            <InputField
+              placeholder="New Password"
+              value={newPassword}
+              onChangeText={setNewPassword}
+              inputContainerStyle={{ backgroundColor: 'transparent' }}
+            />
+          </View>
+
+          {/* Submit Action Button */}
+          <ButtonLarge
+            title="Change"
+            style={styles.changeButton}
+            onPress={() => {}}
           />
         </View>
-
-        {/* Submit Action Button */}
-        <TouchableOpacity style={styles.changeButton} activeOpacity={0.9}>
-          <Text style={styles.changeButtonText}>Change</Text>
-        </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -110,7 +147,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // Theme orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     alignItems: 'center',
     position: 'relative',
   },
@@ -130,16 +167,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  avatarImage: {
-    width: scale(80),
-    height: scale(80),
-    borderRadius: scale(40),
-  },
-  blobOverlay: {
-    position: 'absolute',
-    width: scale(100),
-    height: scale(100),
-  },
   plusOverlay: {
     position: 'absolute',
     justifyContent: 'center',
@@ -157,31 +184,6 @@ const styles = StyleSheet.create({
     paddingTop: verticalScale(25),
     paddingBottom: verticalScale(40),
   },
-  inputGroup: {
-    marginBottom: verticalScale(25),
-    alignItems: 'center',
-  },
-  inputGroupSub: {
-    marginBottom: verticalScale(10),
-    alignItems: 'center',
-  },
-  inputLabel: {
-    fontSize: moderateScale(14),
-    fontWeight: '700',
-    color: '#333333',
-    textAlign: 'center',
-    marginBottom: verticalScale(2),
-  },
-  input: {
-    width: '100%',
-    height: verticalScale(30),
-    borderBottomWidth: 1.5,
-    borderBottomColor: '#444444',
-    textAlign: 'center',
-    fontSize: moderateScale(14),
-    color: '#000000',
-    padding: 0, // Eliminates standard Android input text shifts
-  },
   passwordContainerBox: {
     backgroundColor: '#FBECE1', // Soft tinted orange shade container
     paddingHorizontal: scale(15),
@@ -192,16 +194,8 @@ const styles = StyleSheet.create({
   },
   changeButton: {
     backgroundColor: '#FFCC00', // Gold/Yellow UI button color
-    height: verticalScale(50),
-    borderRadius: moderateScale(25),
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: verticalScale(5),
-  },
-  changeButtonText: {
-    color: '#FFFFFF',
-    fontSize: moderateScale(18),
-    fontWeight: 'bold',
+    maxWidth: '100%',
   },
 });
 

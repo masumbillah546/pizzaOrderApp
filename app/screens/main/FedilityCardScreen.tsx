@@ -8,7 +8,15 @@ import {
   Dimensions,
   ImageBackground,
 } from 'react-native';
-import { Check, X, Pizza, Wine, Drumstick, Strawberry, GlassWater } from 'lucide-react-native';
+import {
+  Check,
+  X,
+  Pizza,
+  Wine,
+  Drumstick,
+  Strawberry,
+  GlassWater,
+} from 'lucide-react-native';
 import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
@@ -25,7 +33,7 @@ interface FedilityCardScreenProps {
 
 const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
   purchasedCount = 7, // Extracted from "You have buy 7 Pizzas" label
-  targetCount = 10,   // Extracted from "Buy 10 Pizza" metric
+  targetCount = 10, // Extracted from "Buy 10 Pizza" metric
 }) => {
   const remainingCount = Math.max(0, targetCount - purchasedCount);
 
@@ -36,10 +44,10 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
   return (
     <SafeAreaView style={styles.screenContainer}>
       <MobileHeader title="FEDILITY CARD" onMenu={() => {}} />
+      <GlowingSeparator />
 
       {/* --- HEADER BLOCK --- */}
       <View style={styles.promoHeaderBar}>
-        <GlowingSeparator />
         <Text style={styles.headerPrimaryText}>
           Buy {targetCount} Pizza and Get Free 1
         </Text>
@@ -50,13 +58,17 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
 
       {/* --- CORE CONTENT BODY AREA --- */}
       <ImageBackground style={styles.mainCoreBody} source={BG_Image}>
-        
         {/* Curved Reward Announcement Title */}
         <Text style={styles.freeCurveLabelText}>Free!!!</Text>
 
         {/* Central Reward Hero Display Graphic Element */}
         <View style={styles.heroGraphicContainer}>
-          <Pizza size={scale(160)} color="#F4A472" strokeWidth={1.5} style={styles.pizzaMainGraphic} />
+          <Pizza
+            size={scale(160)}
+            color="#F4A472"
+            strokeWidth={1.5}
+            style={styles.pizzaMainGraphic}
+          />
           {/* Decorative Vector Arrow path indicating stamp card interaction points */}
           <View style={styles.curvedArrowMarkerContainer}>
             <Text style={styles.vectorDashedArrow}>➔</Text>
@@ -72,16 +84,34 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
                 <View key={index} style={styles.stampSlotBadgeWrapper}>
                   {isStamped ? (
                     /* Completed Active Stamp Style Node Component */
-                    <View style={[styles.stampBaseBubble, styles.activeStampCompletedShadow]}>
+                    <View
+                      style={[
+                        styles.stampBaseBubble,
+                        styles.activeStampCompletedShadow,
+                      ]}
+                    >
                       <View style={styles.greenCheckBadgeCircle}>
-                        <Check size={moderateScale(12)} color="#FFFFFF" strokeWidth={4} />
+                        <Check
+                          size={moderateScale(12)}
+                          color="#FFFFFF"
+                          strokeWidth={4}
+                        />
                       </View>
                     </View>
                   ) : (
                     /* Unused/Empty Inactive Stamp Placeholder Style Node Component */
-                    <View style={[styles.stampBaseBubble, styles.inactiveStampPlaceholder]}>
+                    <View
+                      style={[
+                        styles.stampBaseBubble,
+                        styles.inactiveStampPlaceholder,
+                      ]}
+                    >
                       <View style={styles.grayCrossBadgeCircle}>
-                        <X size={moderateScale(12)} color="#FFFFFF" strokeWidth={4} />
+                        <X
+                          size={moderateScale(12)}
+                          color="#FFFFFF"
+                          strokeWidth={4}
+                        />
                       </View>
                     </View>
                   )}
@@ -93,9 +123,10 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
 
         {/* --- BOTTOM PROGRESS STATUS READOUT --- */}
         <Text style={styles.progressStatusLabelText}>
-          Remaining <Text style={styles.progressCounterHighlight}>{remainingCount}</Text> To Get One Free
+          Remaining{' '}
+          <Text style={styles.progressCounterHighlight}>{remainingCount}</Text>{' '}
+          To Get One Free
         </Text>
-
       </ImageBackground>
     </SafeAreaView>
   );
@@ -110,7 +141,7 @@ const styles = StyleSheet.create({
   /* --- Promo Header Box Styles --- */
   promoHeaderBar: {
     backgroundColor: COLORS.theme, // Exact application orange theme profile color token
-    paddingBottom: verticalScale(14),
+    paddingVertical: verticalScale(14),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -197,7 +228,7 @@ const styles = StyleSheet.create({
     borderWidth: scale(1.5),
   },
   activeStampCompletedShadow: {
-    borderColor: '#4CD964', // Success green border trace line logic anchor 
+    borderColor: '#4CD964', // Success green border trace line logic anchor
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },

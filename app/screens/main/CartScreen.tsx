@@ -136,16 +136,16 @@ export const CartItem = ({ item }: { item: CartItem }) => {
 
 const CartScreen = ({ navigation }: { navigation: any }) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <MobileHeader
         title="MY CART"
         onMenu={() => {}}
         leftIcon={<Home size={moderateScale(24)} color="white" />}
         onLeftPress={() => navigation.navigate('HomeScreen')}
       />
+      <GlowingSeparator />
       {/* --- Header Section --- */}
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerCount}>You have 4 item</Text>
         <Text style={styles.headerCost}>Cost : $16</Text>
       </View>
@@ -162,15 +162,21 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
 
       {/* --- Bottom Action Buttons --- */}
       <View style={styles.footer}>
-        <TouchableOpacity style={[styles.actionButton, styles.deliveryBtn]} onPress={() => navigation.navigate('ConfirmCartScreen')}>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.deliveryBtn]}
+          onPress={() => navigation.navigate('ConfirmCartScreen')}
+        >
           <Text style={styles.btnText}>DILEVERY</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.actionButton, styles.pickupBtn]} onPress={() => navigation.navigate('ConfirmCartScreen')}>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.pickupBtn]}
+          onPress={() => navigation.navigate('ConfirmCartScreen')}
+        >
           <Text style={styles.btnText}>PICK UP</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -181,7 +187,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme,
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     alignItems: 'center',
     position: 'relative',
   },

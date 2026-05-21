@@ -25,8 +25,8 @@ const ProfileScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       {/* --- Header Section --- */}
       <MobileHeader title="PROFILE" onMenu={() => {}} />
+      <GlowingSeparator />
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerName}>John Doe</Text>
         <Text style={styles.headerEmail}>johndoe@mail.com</Text>
       </View>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // UI Theme orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     alignItems: 'center',
     position: 'relative',
   },

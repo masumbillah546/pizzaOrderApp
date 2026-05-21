@@ -58,13 +58,17 @@ const TRACKING_STEPS: TimelineStep[] = [
   },
 ];
 
-const OrderTrackingScreen = ({navigation}) => {
+const OrderTrackingScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader  leftIcon={<Home size={moderateScale(24)} color="white" />}
-        onLeftPress={() => navigation.navigate('HomeScreen')} title="Order Tracking" onMenu={() => {}}/>
+      <MobileHeader
+        leftIcon={<Home size={moderateScale(24)} color="white" />}
+        onLeftPress={() => navigation.navigate('HomeScreen')}
+        title="Order Tracking"
+        onMenu={() => {}}
+      />
+      <GlowingSeparator />
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerTitle}>
           Your Order ID : <Text style={styles.boldText}>D5FX2</Text>
         </Text>
@@ -186,7 +190,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // Primary Brand Orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     justifyContent: 'center',
     alignItems: 'center',
   },

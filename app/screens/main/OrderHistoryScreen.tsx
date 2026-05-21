@@ -13,6 +13,7 @@ import { scale, verticalScale, moderateScale } from '@/utils/ScreenSize';
 import { COLORS } from '@/constants/theme';
 import OrderSuccessModal from '@/components/modals/OrderSuccessModal';
 import RattingModal from '@/components/modals/RattingModal';
+import { GlowingSeparator, MobileHeader } from '@/components';
 
 // --- Types ---
 interface OrderItem {
@@ -66,7 +67,8 @@ const OrderHistoryScreen = ({ navigation }: { navigation: any }) => {
     React.useState(false);
   return (
     <SafeAreaView style={styles.container}>
-      {/* --- Header Section --- */}
+      <MobileHeader title="ORDER HISTORY" onMenu={() => {}} />
+      <GlowingSeparator />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Order list and status</Text>
       </View>
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // UI Brand Orange
-    height: verticalScale(55),
+    paddingVertical: verticalScale(15),
     justifyContent: 'center',
     alignItems: 'center',
   },

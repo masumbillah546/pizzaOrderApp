@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   track: {
     width: '100%',
-    height: verticalScale(10),
+    height: verticalScale(5),
     backgroundColor: COLORS.theme,
     justifyContent: 'center',
     alignItems: 'center',

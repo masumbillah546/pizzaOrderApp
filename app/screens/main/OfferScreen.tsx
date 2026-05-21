@@ -56,9 +56,9 @@ const OffersScreen = () => {
     <SafeAreaView style={styles.container}>
       <MobileHeader title="OFFER" onMenu={() => {}} />
 
+      <GlowingSeparator />
       {/* --- Header Section --- */}
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerTitle}>4 Message is Unread</Text>
       </View>
 
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // UI Theme orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     justifyContent: 'center',
     alignItems: 'center',
   },

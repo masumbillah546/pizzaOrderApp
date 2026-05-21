@@ -78,8 +78,8 @@ const TableBookingScreen = () => {
     <SafeAreaView style={styles.container}>
       {/* --- Top Navigation Header Bar --- */}
       <MobileHeader title="FOOD & TABLE BOOKING" onMenu={() => {}} />
+      <GlowingSeparator />
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerTitle}>Book you table and Choose Food</Text>
       </View>
 
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // UI Theme Orange
-    paddingBottom: verticalScale(10),
+    paddingVertical: verticalScale(10),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     width: scale(110),
     position: 'relative',
     zIndex: 10,
-    marginBottom: verticalScale(30),
+    marginBottom: verticalScale(10),
   },
   dropdownSelectorTrigger: {
     flexDirection: 'row',

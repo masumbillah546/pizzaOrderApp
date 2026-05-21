@@ -66,7 +66,11 @@ const cardWidth = (screenWidth - scale(45)) / 2;
 const GalleryScreen = () => {
   const renderGridItem = ({ item }: { item: AlbumItem }) => (
     <TouchableOpacity style={[styles.card, { width: cardWidth }]}>
-      <Image source={{uri: item.image}} style={styles.cardImage} resizeMode="cover" />
+      <Image
+        source={{ uri: item.image }}
+        style={styles.cardImage}
+        resizeMode="cover"
+      />
 
       <View style={styles.textContainer}>
         <Text style={styles.albumTitle} numberOfLines={1}>
@@ -81,9 +85,9 @@ const GalleryScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MobileHeader title="SHOP GALLERY" onMenu={() => {}} />
+      <GlowingSeparator />
       {/* --- Header Section --- */}
       <View style={styles.header}>
-        <GlowingSeparator />
         <Text style={styles.headerSubtitle}>Special Moment</Text>
         <Text style={styles.headerTitle}>On Camera</Text>
       </View>
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: COLORS.theme, // Theme orange
-    paddingBottom: verticalScale(15),
+    paddingVertical: verticalScale(15),
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -106,9 +106,9 @@ export const PizzaCard = ({ item }: { item: FoodItem }) => {
           Price :<Text style={styles.priceBold}>{item.price}</Text>
         </Text>
 
-        <TouchableOpacity style={styles.buyButton}>
+        {/* <TouchableOpacity style={styles.buyButton}>
           <Text style={styles.buyText}>Buy</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       {item.isSpecial && (
@@ -186,8 +186,9 @@ const MenuPage = ({ navigation }: { navigation: any }) => {
           alignSelf: 'center',
           opacity: 0.8,
         }}
-        onPress={() => navigation.navigate('BuyingOptionScreen')}
-        title="Buy Now!!"
+        // onPress={() => navigation.navigate('BuyingOptionScreen')}
+        onPress={() => navigation.navigate('ProductsScreen')}
+        title="Order Now!!"
       />
     </View>
   );

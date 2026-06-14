@@ -8,7 +8,7 @@ import { moderateScale, verticalScale } from '@/utils/ScreenSize';
 import { useAlert, useLanguage, useLoading } from '@/hooks';
 import { InputField, Button, Container } from '@/components';
 // import Dropdown from '@/components/Dropdown';
-import TechnicianService from '@/services/TechnicianService';
+// import TechnicianService from '@/services/TechnicianService';
 
 export default function Support({ navigation }: { navigation: any }) {
   const { language } = useLanguage();

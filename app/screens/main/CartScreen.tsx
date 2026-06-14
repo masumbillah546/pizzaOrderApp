@@ -21,11 +21,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
 import { ButtonLarge, GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
+import { useCartStore } from '@/stores/cartStore';
 
 // --- Types ---
 interface CartItem {
   id: string;
-  title: string;
+  name: string;
   price: string;
   quantity: number;
   image: any;
@@ -76,6 +77,10 @@ export const CART_DATA: CartItem[] = [
 ];
 
 export const CartItem = ({ item }: { item: CartItem }) => {
+  const removeFromCart = useCartStore(state => state.removeFromCart);
+  const updateProductQuantity = useCartStore(
+    state => state.updateProductQuantity,
+  );
   const renderCategoryIcon = (category: string) => {
     switch (category) {
       case 'food':
@@ -91,7 +96,10 @@ export const CartItem = ({ item }: { item: CartItem }) => {
   return (
     <View key={item.id} style={styles.cardContainer}>
       {/* Absolute Positioned Delete Button */}
-      <TouchableOpacity style={styles.deleteButton}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => removeFromCart(item.id)}
+      >
         <XCircle size={moderateScale(20)} color="#F4A472" fill="white" />
       </TouchableOpacity>
 
@@ -106,7 +114,7 @@ export const CartItem = ({ item }: { item: CartItem }) => {
 
         <View style={styles.detailsContainer}>
           <Text style={styles.itemTitle} numberOfLines={1}>
-            {item.title}
+            {item.name}
           </Text>
           <Text style={styles.itemPrice}>
             Price :<Text style={styles.priceBold}> {item.price}</Text>
@@ -116,11 +124,16 @@ export const CartItem = ({ item }: { item: CartItem }) => {
         {/* Quantity Selector & Right Tag Column */}
         <View style={styles.rightColumn}>
           <View style={styles.quantityRow}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              disabled={item.quantity === 1}
+              onPress={() => updateProductQuantity(item.id, item.quantity - 1)}
+            >
               <MinusCircle size={moderateScale(20)} color="#7A7A7A" />
             </TouchableOpacity>
             <Text style={styles.quantityText}>{item.quantity}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => updateProductQuantity(item.id, item.quantity + 1)}
+            >
               <PlusCircle size={moderateScale(20)} color="#7A7A7A" />
             </TouchableOpacity>
           </View>
@@ -135,6 +148,10 @@ export const CartItem = ({ item }: { item: CartItem }) => {
 };
 
 const CartScreen = ({ navigation }: { navigation: any }) => {
+  const products = useCartStore(state => state.products);
+  const updateProductQuantity = useCartStore(
+    state => state.updateProductQuantity,
+  );
   return (
     <View style={styles.container}>
       <MobileHeader
@@ -155,7 +172,7 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
       >
-        {CART_DATA.map(item => (
+        {products.map(item => (
           <CartItem key={item.id} item={item} />
         ))}
       </ScrollView>

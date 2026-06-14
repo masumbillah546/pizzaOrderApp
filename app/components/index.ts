@@ -22,4 +22,6 @@ export {default as SectionHeader} from './SectionHeader';
 export {default as SideBar} from './SideBar';
 export {default as GlowingSeparator} from './GlowingSeparator';
 export {default as CartCounter} from './CartCounter';
+export {default as ProductCard} from './ProductCard';
+export {default as QuantitySelector} from './QuantitySelector';
 

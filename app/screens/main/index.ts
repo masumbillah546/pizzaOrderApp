@@ -15,3 +15,6 @@ export { default as BuyingOptionScreen } from './BuyingOptionScreen';
 export { default as ConfirmCartScreen } from './ConfirmCartScreen';
 export { default as CheckoutScreen } from './CheckoutScreen';
 export { default as PickupTimeScreen } from './PickupTimeScreen';
+export { default as EventsScreen } from './EventsScreen';
+export { default as AboutScreen } from './AboutScreen';
+export { default as ProductsScreen } from './ProductsScreen';

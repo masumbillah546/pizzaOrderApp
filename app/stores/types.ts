@@ -47,8 +47,8 @@ export type Product = {
   price: string;
   description: string;
   attributes: string;
-  image?: ImageSourcePropType;
-  thumbnail_image?: string;
+  // image?: ImageSourcePropType;
+  image?: string;
   category: string;
   quantity?: number;
 };

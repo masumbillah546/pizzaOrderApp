@@ -31,6 +31,9 @@ import {
   ConfirmCartScreen,
   CheckoutScreen,
   PickupTimeScreen,
+  EventsScreen,
+  AboutScreen,
+  ProductsScreen,
 } from '@/screens';
 //
 import { COLORS, FontSizes } from '@/constants/theme';
@@ -72,7 +75,7 @@ export const languageSheetRefMain = React.createRef<any>();
 export const acceptJobSheetRefMain = React.createRef<any>();
 export const acceptedOfferSheet = React.createRef<any>();
 
-export default function MainStack() {
+export default function DrawerStack() {
   // useEffect(() => {
   //   setTimeout(() => {
   //     acceptedOfferSheet.current?.expand();
@@ -99,155 +102,94 @@ export default function MainStack() {
         component={HomeScreen}
         // options={{ title: 'Messages' }}
       />
-      <Drawer.Screen
-        name="FoodDetailScreen"
-        component={FoodDetailScreen}
-        // options={{ title: 'Messages' }}
-      />
-      <Drawer.Screen
-        name="BuyingOptionScreen"
-        component={BuyingOptionScreen}
-        // options={{ title: 'Messages' }}
-      />
-      <Drawer.Screen
-        name="CartScreen"
-        component={CartScreen}
-        // options={{ title: 'Messages' }}
-      />
-      <Drawer.Screen
-        name="ConfirmCartScreen"
-        component={ConfirmCartScreen}
-        // options={{ title: 'Messages' }}
-      />
-      <Drawer.Screen
-        name="CheckoutScreen"
-        component={CheckoutScreen}
-        // options={{ title: 'Messages' }}
-      />
-      <Drawer.Screen
-        name="PickupTimeScreen"
-        component={PickupTimeScreen}
-        // options={{ title: 'Messages' }}
-      />
-      <Drawer.Screen
-        name="GalleryScreen"
-        component={GalleryScreen}
-        // options={{ title: 'Messages' }}
-      />
-      <Drawer.Screen
-        name="OfferScreen"
-        component={OfferScreen}
-        // options={{ title: 'Messages' }}
-      />
+    </Drawer.Navigator>
+  );
+}
 
-      <Drawer.Screen
-        name="OrderHistoryScreen"
-        component={OrderHistoryScreen}
-        // options={{ title: 'Messages' }}
-      />
+export default function MainStack() {
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     acceptedOfferSheet.current?.expand();
+  //   }, 10000);
+  // }, []);
 
-      <Drawer.Screen
-        name="OrderDetailsScreen"
-        component={OrderDetailsScreen}
-        // options={{ title: 'Messages' }}
-      />
-
-      <Drawer.Screen
-        name="FedilityCardScreen"
-        component={FedilityCardScreen}
-        // options={{ title: 'Messages' }}
-      />
-
-      <Drawer.Screen
-        name="CategoriesScreen"
-        component={CategoriesScreen}
-        // options={{ title: 'Messages' }}
-      />
-
-      <Drawer.Screen
-        name="CategoryItemScreen"
-        component={CategoryItemScreen}
-        // options={{ title: 'Messages' }}
-      />
-
-      <Drawer.Screen
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false, // Keeps headers hidden globally just like your drawer config
+      }}
+    >
+      <Stack.Screen name="HomeScreen" component={DrawerStack} />
+      <Stack.Screen name="FoodDetailScreen" component={FoodDetailScreen} />
+      <Stack.Screen name="BuyingOptionScreen" component={BuyingOptionScreen} />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
+      <Stack.Screen name="ConfirmCartScreen" component={ConfirmCartScreen} />
+      <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+      <Stack.Screen name="PickupTimeScreen" component={PickupTimeScreen} />
+      <Stack.Screen name="GalleryScreen" component={GalleryScreen} />
+      <Stack.Screen name="EventsScreen" component={EventsScreen} />
+      <Stack.Screen name="AboutScreen" component={AboutScreen} />
+      <Stack.Screen name="OfferScreen" component={OfferScreen} />
+      <Stack.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} />
+      <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+      <Stack.Screen name="FedilityCardScreen" component={FedilityCardScreen} />
+      <Stack.Screen name="CategoriesScreen" component={CategoriesScreen} />
+      <Stack.Screen name="CategoryItemScreen" component={CategoryItemScreen} />
+      <Stack.Screen
         name="OrderTrackingScreen"
         component={OrderTrackingScreen}
-        // options={{ title: 'Messages' }}
       />
-
-      <Drawer.Screen
-        name="TableBookingScreen"
-        component={TableBookingScreen}
-        // options={{ title: 'Messages' }}
-      />
-
-      <Drawer.Screen
-        name="TableFoodScreen"
-        component={TableFoodScreen}
-        // options={{ title: 'Messages' }}
-      />
-
-      <Drawer.Screen
+      <Stack.Screen name="TableBookingScreen" component={TableBookingScreen} />
+      <Stack.Screen name="TableFoodScreen" component={TableFoodScreen} />
+      <Stack.Screen name="ProductsScreen" component={ProductsScreen} />
+      <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
-        options={_props => ({
+        options={{
           title: 'Message Details',
-        })}
+        }}
       />
-      <Drawer.Screen
+      <Stack.Screen
         name="NotificationsCenter"
         component={NotificationsCenterScreen}
         options={{ title: 'Notifications' }}
       />
-      <Drawer.Screen
+      <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
         options={{ title: 'Personal Info' }}
       />
-      <Drawer.Screen
+      <Stack.Screen
         name="ProfileEditScreen"
         component={EditProfileScreen}
         options={{ title: 'Personal Info' }}
       />
-
-      <Drawer.Screen
-        name="ChatScreen"
-        component={ChatScreen}
-        // options={{ title: 'Messages' }}
-      />
-
-      <Drawer.Screen
+      <Stack.Screen name="ChatScreen" component={ChatScreen} />
+      <Stack.Screen
         name="PasswordScreen"
         component={PasswordScreen}
         options={{ title: '' }}
       />
-      <Drawer.Screen
+      <Stack.Screen
         name="SupportScreen"
         component={Support}
         options={{ title: 'Support' }}
       />
-      <Drawer.Screen
+      <Stack.Screen
         name="SearchScreen"
         component={SearchScreen}
         options={{ title: 'Find your Location' }}
       />
-
-      <Drawer.Screen
+      <Stack.Screen
         name="HowToUseScreen"
         component={WebViewScreen}
         options={{ title: 'How To Use' }}
       />
-      <Drawer.Screen
+      <Stack.Screen
         name="PrivacyPolicyScreen"
         component={WebViewScreen}
         options={{ title: 'Privacy & Policy' }}
       />
-      <Drawer.Screen
-        name="AboutScreen"
-        component={WebViewScreen}
-        options={{ title: 'About App' }}
-      />
-    </Drawer.Navigator>
+    </Stack.Navigator>
   );
 }

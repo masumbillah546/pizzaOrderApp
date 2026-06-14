@@ -27,6 +27,8 @@ const menuItems = [
   { title: 'Messenger', screen: 'NotificationScreen' },
   { title: 'Gallery', screen: 'GalleryScreen' },
   { title: 'Food & Table Booking', screen: 'TableBookingScreen' },
+  { title: 'Events', screen: 'EventsScreen' },
+  { title: 'About', screen: 'AboutScreen' },
   { title: 'Settings', screen: 'CoinsScreen' },
 ];
 

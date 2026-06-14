@@ -1,4 +1,4 @@
-import { SERVER_URL_IDENTITY } from '@/config';
+import { DEFAULT_API_BASE_URL } from '@/config/env';
 import request from '../utils/request';
 import { FETCH_TYPES } from '@/constants/app';
 import { API_ROUTES } from '@/constants/rest_api';
@@ -12,7 +12,7 @@ import {
 } from '@/utils/device';
 
 export default class AuthService {
-  static baseUrl = SERVER_URL_IDENTITY;
+  static baseUrl = DEFAULT_API_BASE_URL;
 
   static async login(body: any) {
     const token = false;

@@ -27,7 +27,9 @@ const BuyingOptionScreen: React.FC<BuyingOptionScreenProps> = ({
 }) => {
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <MobileHeader title="BUY NOW" onMenu={() => {}} />
+      <MobileHeader title="ORDER NOW" onBack={() => {
+        navigation.goBack();
+      }}/>
 
       <GlowingSeparator />
       {/* --- HEADER BLOCK --- */}
@@ -45,13 +47,18 @@ const BuyingOptionScreen: React.FC<BuyingOptionScreenProps> = ({
             variant="warning"
             style={styles.btn}
             title={'Delivery'}
-            // onPress={() => navigation.navigate('TableFoodScreen')}
+            onPress={() => navigation.navigate('ProductsScreen')}
           />
 
           <ButtonLarge
             style={styles.btn}
             title={'Pickup'}
-            // onPress={() => navigation.navigate('TableFoodScreen')}
+            onPress={() => navigation.navigate('ProductsScreen')}
+          />
+           <ButtonLarge
+            style={[styles.btn, {backgroundColor: COLORS.success}]}
+            title={'Book a Table'}
+            onPress={() => navigation.navigate('TableBookingScreen')}
           />
         </View>
       </ImageBackground>

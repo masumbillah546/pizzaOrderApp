@@ -1,12 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
-import { scale, verticalScale } from '@/utils/ScreenSize';
-import { ButtonLarge, GlowingSeparator, MobileHeader } from '@/components';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  FlatList,
+} from 'react-native';
+import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
+import {
+  ButtonLarge,
+  GlowingSeparator,
+  MobileHeader,
+  ProductCard,
+} from '@/components';
 import { COLORS, Shadows } from '@/constants/theme';
 import TableCloth from './components/TableCloth';
 import DateTimeCard from './components/DateTimeCard';
 import { FOOD_DATA, FoodCategoriesHeader, PizzaCard } from './HomeScreen';
 import OrderSuccessModal from '@/components/modals/OrderSuccessModal';
+import { ProductData } from './ProductsScreen';
 
 const TableFoodScreen = ({ navigation }) => {
   // Picker states tracking indices corresponding to mockup centers
@@ -18,9 +30,21 @@ const TableFoodScreen = ({ navigation }) => {
   const [guests, setGuests] = useState('4 People');
   const [successModal, setSuccessModal] = useState(false);
 
+  const renderItem = useCallback(
+    ({ item }: any) => {
+      return <ProductCard item={item} navigation={navigation} />;
+    },
+    [navigation],
+  );
+
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="FOOD & TABLE BOOKING" onMenu={() => {}} />
+      <MobileHeader
+        title="FOOD & TABLE BOOKING"
+        onBack={() => {
+          navigation.goBack();
+        }}
+      />
       <View style={styles.ginghamFooterContainer}>
         <TableCloth />
         <DateTimeCard
@@ -34,14 +58,33 @@ const TableFoodScreen = ({ navigation }) => {
         />
       </View>
       <FoodCategoriesHeader />
-      <ScrollView
+      {/* <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
         {FOOD_DATA.map(item => (
           <PizzaCard key={item.id} item={item} />
         ))}
-      </ScrollView>
+      </ScrollView> */}
+      <FlatList
+        data={ProductData}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        numColumns={2}
+        columnWrapperStyle={{
+          gap: moderateScale(10),
+          justifyContent: 'space-between',
+        }}
+        contentContainerStyle={styles.contentContainer}
+        // onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+        // ListFooterComponent={<FlatListFooter isLoadMore={loadingMore} />}
+        // ListEmptyComponent={() =>
+        //   !loading && (
+        //     <FlatListEmptyMessage no_item_message="No products found" />
+        //   )
+        // }
+      />
       <ButtonLarge
         variant="warning"
         style={{
@@ -53,10 +96,10 @@ const TableFoodScreen = ({ navigation }) => {
           // opacity: 0.8,
         }}
         onPress={() => {
-          // navigation.navigate('BuyingOptionScreen')
-          setSuccessModal(true);
+          navigation.navigate('ConfirmCartScreen');
+          // setSuccessModal(true);
         }}
-        title="Buy Now!!"
+        title="Book Now!!"
       />
       <OrderSuccessModal
         orderId="45454"
@@ -71,7 +114,14 @@ const TableFoodScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    // backgroundColor: '#FFFFFF',
+  },
+
+  contentContainer: {
+    flexGrow: 1,
+    gap: moderateScale(15),
+    padding: scale(16),
+    paddingBottom: verticalScale(100),
   },
 
   scrollContainer: {

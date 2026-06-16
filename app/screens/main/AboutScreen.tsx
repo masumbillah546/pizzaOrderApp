@@ -23,6 +23,7 @@ const AboutScreen: React.FC<AboutScreenProps> = ({
   onLocationChangePress,
   onInfoBadgePress,
   onSocialMediaPress,
+  navigation
 }) => {
   // Hardcoded location indicator string reflecting the design layout spec
   const [currentLocation] = useState<string>('Mirpu-11,Dhaka');
@@ -36,7 +37,7 @@ const AboutScreen: React.FC<AboutScreenProps> = ({
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-     <MobileHeader title="ABOUT US" onMenu={() => {}}/>
+     <MobileHeader title="ABOUT US" onBack={() => navigation.goBack()} />
 
       <ScrollView 
         showsVerticalScrollIndicator={false}

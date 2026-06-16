@@ -13,7 +13,7 @@ import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
 import { GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
 
-const FoodDetailScreen = () => {
+const FoodDetailScreen = ({ navigation }: { navigation: any }) => {
   const ingredients = [
     'Lorem Ipsum',
     'Lorem Ipsum',
@@ -24,7 +24,7 @@ const FoodDetailScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* --- Custom Header --- */}
-      <MobileHeader title="FOOD DETAILS" onMenu={() => {}} />
+      <MobileHeader title="FOOD DETAILS" onBack={() => navigation.goBack()} />
       <GlowingSeparator />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Bargar King</Text>

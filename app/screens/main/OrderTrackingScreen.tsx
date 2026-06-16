@@ -65,7 +65,7 @@ const OrderTrackingScreen = ({ navigation }) => {
         leftIcon={<Home size={moderateScale(24)} color="white" />}
         onLeftPress={() => navigation.navigate('HomeScreen')}
         title="Order Tracking"
-        onMenu={() => {}}
+        onBack={() => navigation.goBack()} 
       />
       <GlowingSeparator />
       <View style={styles.header}>

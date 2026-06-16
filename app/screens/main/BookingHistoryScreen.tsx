@@ -60,17 +60,20 @@ const ORDER_HISTORY_DATA: OrderItem[] = [
   },
 ];
 
-const OrderHistoryScreen = ({ navigation }: { navigation: any }) => {
+const BookingHistoryScreen = ({ navigation }: { navigation: any }) => {
   const [isOrderSuccessModalVisible, setIsOrderSuccessModalVisible] =
     React.useState(false);
   const [isRattingModalVisible, setIsRattingModalVisible] =
     React.useState(false);
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="ORDER HISTORY" onBack={() => navigation.goBack()}  />
+      <MobileHeader
+        title="TABLE BOOKING HISTORY"
+        onBack={() => navigation.goBack()}
+      />
       <GlowingSeparator />
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Order list and status</Text>
+        <Text style={styles.headerTitle}>Booking list and details</Text>
       </View>
 
       {/* --- Scrollable Order List --- */}
@@ -92,7 +95,7 @@ const OrderHistoryScreen = ({ navigation }: { navigation: any }) => {
             {/* Central Information Block */}
             <View style={styles.detailsContainer}>
               <Text style={styles.orderIdText}>
-                Your Order ID :{' '}
+                Your Booking ID :{' '}
                 <Text style={styles.idHighlight}>{item.orderId}</Text> (
                 {item.itemCount} item)
               </Text>
@@ -109,32 +112,13 @@ const OrderHistoryScreen = ({ navigation }: { navigation: any }) => {
 
             {/* Right Action Buttons Column */}
             <View style={styles.actionsContainer}>
-              {item.isActive ? (
-                <>
-                  <TouchableOpacity
-                    style={[styles.btn, styles.orangeBtn]}
-                    activeOpacity={0.8}
-                    onPress={() => navigation.navigate('OrderDetailsScreen')}
-                  >
-                    <Text style={styles.btnText}>Details</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.btn, styles.yellowBtn]}
-                    activeOpacity={0.8}
-                    onPress={() => navigation.navigate('OrderTrackingScreen')}
-                  >
-                    <Text style={styles.btnText}>Status</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <TouchableOpacity
-                  style={[styles.btn, styles.greyBtn]}
-                  activeOpacity={0.8}
-                  onPress={() => setIsRattingModalVisible(true)}
-                >
-                  <Text style={styles.btnText}>Rate us</Text>
-                </TouchableOpacity>
-              )}
+              <TouchableOpacity
+                style={[styles.btn, styles.orangeBtn]}
+                activeOpacity={0.8}
+                onPress={() => navigation.navigate('ConfirmCartScreen', {isBooked: true})}
+              >
+                <Text style={styles.btnText}>Details</Text>
+              </TouchableOpacity>
             </View>
           </View>
         ))}
@@ -251,4 +235,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrderHistoryScreen;
+export default BookingHistoryScreen;

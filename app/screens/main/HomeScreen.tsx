@@ -14,10 +14,14 @@ import {
   Martini,
   ChevronRight,
   Star,
+  Salad,
+  CookingPot,
+  Beef,
+  IceCream,
 } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
-import { ButtonLarge, CartCounter, MobileHeader } from '@/components';
+import { ButtonLarge, CartCounter, MobileHeader, NotificationCounter } from '@/components';
 import { Shadows } from '@/constants/theme';
 
 // --- Types ---
@@ -120,16 +124,59 @@ export const PizzaCard = ({ item }: { item: FoodItem }) => {
   );
 };
 
+// Breakfast, lunch, dinner, desert, drinks, others, all
 export const FoodCategoriesHeader = () => {
   return (
     <View style={styles.header}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <TouchableOpacity style={[styles.categoryBtn, styles.activeCategory]}>
-          <Utensils color="black" size={moderateScale(24)} />
-          <Text style={styles.categoryTextActive}>All Food</Text>
-        </TouchableOpacity>
+        {[
+          {
+            id: '1',
+            title: 'All Food',
+            icon: <Utensils color="black" size={moderateScale(24)} />,
+            category: 'food',
+          },
+          {
+            id: '2',
+            title: 'Breakfast',
+            icon: <Salad color="black" size={moderateScale(24)} />,
+            category: 'breakfast',
+          },
+          {
+            id: '3',
+            title: 'Lunch',
+            icon: <CookingPot color="black" size={moderateScale(24)} />,
+            category: 'lunch',
+          },
+          {
+            id: '4',
+            title: 'Dinner',
+            icon: <Beef color="black" size={moderateScale(24)} />,
+            category: 'dinner',
+          },
+          {
+            id: '5',
+            title: 'Desert',
+            icon: <IceCream color="black" size={moderateScale(24)} />,
+            category: 'desert',
+          },
+          {
+            id: '6',
+            title: 'Drinks',
+            icon: <Martini color="black" size={moderateScale(24)} />,
+            category: 'drinks',
+          },
+        ].map(item => (
+          <TouchableOpacity
+            key={item.id}
+            style={[styles.categoryBtn, styles.activeCategory]}
+          >
+            {item.icon}
+            <Text style={styles.categoryTextActive}>{item.title}</Text>
+          </TouchableOpacity>
+        ))}
 
-        <TouchableOpacity style={styles.categoryBtn}>
+        {/* <TouchableOpacity style={styles.categoryBtn}>
           <Hamburger color="black" size={moderateScale(24)} />
           <Text style={styles.categoryText}>First Food</Text>
         </TouchableOpacity>
@@ -137,7 +184,7 @@ export const FoodCategoriesHeader = () => {
         <TouchableOpacity style={styles.categoryBtn}>
           <Martini color="black" size={moderateScale(24)} />
           <Text style={styles.categoryText}>Hard Drinks</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
       <ChevronRight
         color="black"
@@ -152,17 +199,12 @@ const MenuPage = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.container}>
       <MobileHeader
-        title="MY FOOD"
-        // onBack={() => {}}
+        title="MENU"
         onMenu={() => {}}
-        // onRightPress={() => {}}
-        // onLeftPress={() => {}}
-        // rightIcon={null}
-        // rightLabel={null}
-        // leftIcon={null}
-        // leftLabel={null}
-        leftIcon={<CartCounter />}
-        onLeftPress={() => navigation.navigate('CartScreen')}
+        notificationIcon={<NotificationCounter />}
+        onNotificationPress={() => navigation.navigate('NotificationScreen')}
+        rightIcon={<CartCounter />}
+        onRightPress={() => navigation.navigate('CartScreen')}
       />
       {/* --- Category Header --- */}
       <FoodCategoriesHeader />
@@ -186,8 +228,8 @@ const MenuPage = ({ navigation }: { navigation: any }) => {
           alignSelf: 'center',
           opacity: 0.8,
         }}
-        // onPress={() => navigation.navigate('BuyingOptionScreen')}
-        onPress={() => navigation.navigate('ProductsScreen')}
+        onPress={() => navigation.navigate('BuyingOptionScreen')}
+        // onPress={() => navigation.navigate('ProductsScreen')}
         title="Order Now!!"
       />
     </View>

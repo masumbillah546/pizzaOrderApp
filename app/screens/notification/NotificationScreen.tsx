@@ -69,7 +69,9 @@ const NotificationScreen = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* --- Header Section --- */}
-      <MobileHeader title="MESSAGE" onMenu={() => {}} />
+      <MobileHeader title="MESSAGE" onBack={() => {
+        navigation.goBack();
+      }} />
       <GlowingSeparator />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>You have 4 Message</Text>

@@ -51,10 +51,10 @@ const OFFERS_DATA: OfferItem[] = [
   },
 ];
 
-const OffersScreen = () => {
+const OffersScreen = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="OFFER" onMenu={() => {}} />
+      <MobileHeader title="OFFER" onBack={() => navigation.goBack()}  />
 
       <GlowingSeparator />
       {/* --- Header Section --- */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -29,6 +29,9 @@ import {
 import { COLORS, FontSizes, Shadows } from '@/constants/theme';
 import TableCloth from './components/TableCloth';
 import DateTimeCard from './components/DateTimeCard';
+import OrderSuccessModal from '@/components/modals/OrderSuccessModal';
+import { CART_DATA, CartItem } from './CartScreen';
+
 
 // --- Types ---
 interface CartItem {
@@ -40,116 +43,119 @@ interface CartItem {
   category: 'food' | 'drink' | 'hot';
 }
 
-export const CART_DATA: CartItem[] = [
-  {
-    id: '1',
-    title: 'Margherita: tomato sauce',
-    price: '$ 10',
-    quantity: 1,
-    image: 'https://via.placeholder.com/150',
-    category: 'food',
-  },
-  {
-    id: '2',
-    title: 'Cocacola(1/2ltr)',
-    price: '$ 2',
-    quantity: 1,
-    image: 'https://via.placeholder.com/150',
-    category: 'drink',
-  },
-  {
-    id: '3',
-    title: 'Cocacola(1 pag)',
-    price: '$ 2',
-    quantity: 1,
-    image: 'https://via.placeholder.com/150',
-    category: 'hot', // Uses the coffee icon/yellow badge style from image
-  },
-  {
-    id: '4',
-    title: 'Pizza kings',
-    price: '$ 2',
-    quantity: 1,
-    image: 'https://via.placeholder.com/150',
-    category: 'food',
-  },
-  {
-    id: '5',
-    title: 'Margherita: tomato sauce',
-    price: '$ 10',
-    quantity: 1,
-    image: 'https://via.placeholder.com/150',
-    category: 'food',
-  },
-];
+// export const CART_DATA: CartItem[] = [
+//   {
+//     id: '1',
+//     title: 'Margherita: tomato sauce',
+//     price: '$ 10',
+//     quantity: 1,
+//     image: 'https://via.placeholder.com/150',
+//     category: 'food',
+//   },
+//   {
+//     id: '2',
+//     title: 'Cocacola(1/2ltr)',
+//     price: '$ 2',
+//     quantity: 1,
+//     image: 'https://via.placeholder.com/150',
+//     category: 'drink',
+//   },
+//   {
+//     id: '3',
+//     title: 'Cocacola(1 pag)',
+//     price: '$ 2',
+//     quantity: 1,
+//     image: 'https://via.placeholder.com/150',
+//     category: 'hot', // Uses the coffee icon/yellow badge style from image
+//   },
+//   {
+//     id: '4',
+//     title: 'Pizza kings',
+//     price: '$ 2',
+//     quantity: 1,
+//     image: 'https://via.placeholder.com/150',
+//     category: 'food',
+//   },
+//   {
+//     id: '5',
+//     title: 'Margherita: tomato sauce',
+//     price: '$ 10',
+//     quantity: 1,
+//     image: 'https://via.placeholder.com/150',
+//     category: 'food',
+//   },
+// ];
 
-export const CartItem = ({ item }: { item: CartItem }) => {
-  const renderCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'food':
-        return <Beef color="black" size={moderateScale(20)} />;
-      case 'drink':
-        return <GlassWater color="black" size={moderateScale(20)} />;
-      case 'hot':
-        return <Coffee color="black" size={moderateScale(20)} />;
-      default:
-        return null;
-    }
-  };
-  return (
-    <View key={item.id} style={styles.cardContainer}>
-      {/* Absolute Positioned Delete Button */}
-      <TouchableOpacity style={styles.deleteButton}>
-        <XCircle size={moderateScale(20)} color="#F4A472" fill="white" />
-      </TouchableOpacity>
+// export const CartItem = ({ item }: { item: CartItem }) => {
+//   const renderCategoryIcon = (category: string) => {
+//     switch (category) {
+//       case 'food':
+//         return <Beef color="black" size={moderateScale(20)} />;
+//       case 'drink':
+//         return <GlassWater color="black" size={moderateScale(20)} />;
+//       case 'hot':
+//         return <Coffee color="black" size={moderateScale(20)} />;
+//       default:
+//         return null;
+//     }
+//   };
+//   return (
+//     <View key={item.id} style={styles.cardContainer}>
+//       {/* Absolute Positioned Delete Button */}
+//       <TouchableOpacity style={styles.deleteButton}>
+//         <XCircle size={moderateScale(20)} color="#F4A472" fill="white" />
+//       </TouchableOpacity>
 
-      <View style={styles.card}>
-        <Image
-          source={{
-            uri: 'https://www.schwartz.co.uk/-/media/project/oneweb/schwartz/recipes/recipe_image_update/march_18_2025/easy_pizza_recipe_800x800.webp?rev=217b39d7488a4aa7947174d6e475219f&vd=20250325T174436Z&extension=webp&hash=36F310B7BA2EA4491AADEC213844DF8B',
-          }}
-          style={styles.itemImage}
-          resizeMode="contain"
-        />
+//       <View style={styles.card}>
+//         <Image
+//           source={{
+//             uri: 'https://www.schwartz.co.uk/-/media/project/oneweb/schwartz/recipes/recipe_image_update/march_18_2025/easy_pizza_recipe_800x800.webp?rev=217b39d7488a4aa7947174d6e475219f&vd=20250325T174436Z&extension=webp&hash=36F310B7BA2EA4491AADEC213844DF8B',
+//           }}
+//           style={styles.itemImage}
+//           resizeMode="contain"
+//         />
 
-        <View style={styles.detailsContainer}>
-          <Text style={styles.itemTitle} numberOfLines={1}>
-            {item.title}
-          </Text>
-          <Text style={styles.itemPrice}>
-            Price :<Text style={styles.priceBold}> {item.price}</Text>
-          </Text>
-        </View>
+//         <View style={styles.detailsContainer}>
+//           <Text style={styles.itemTitle} numberOfLines={1}>
+//             {item.title}
+//           </Text>
+//           <Text style={styles.itemPrice}>
+//             Price :<Text style={styles.priceBold}> {item.price}</Text>
+//           </Text>
+//         </View>
 
-        {/* Quantity Selector & Right Tag Column */}
-        <View style={styles.rightColumn}>
-          <View style={styles.quantityRow}>
-            <TouchableOpacity>
-              <MinusCircle size={moderateScale(20)} color="#7A7A7A" />
-            </TouchableOpacity>
-            <Text style={styles.quantityText}>{item.quantity}</Text>
-            <TouchableOpacity>
-              <PlusCircle size={moderateScale(20)} color="#7A7A7A" />
-            </TouchableOpacity>
-          </View>
+//         {/* Quantity Selector & Right Tag Column */}
+//         <View style={styles.rightColumn}>
+//           <View style={styles.quantityRow}>
+//             <TouchableOpacity>
+//               <MinusCircle size={moderateScale(20)} color="#7A7A7A" />
+//             </TouchableOpacity>
+//             <Text style={styles.quantityText}>{item.quantity}</Text>
+//             <TouchableOpacity>
+//               <PlusCircle size={moderateScale(20)} color="#7A7A7A" />
+//             </TouchableOpacity>
+//           </View>
 
-          <View style={styles.categoryBadge}>
-            {renderCategoryIcon(item.category)}
-          </View>
-        </View>
-      </View>
-    </View>
-  );
-};
+//           <View style={styles.categoryBadge}>
+//             {renderCategoryIcon(item.category)}
+//           </View>
+//         </View>
+//       </View>
+//     </View>
+//   );
+// };
 
-const ConfirmCartScreen = ({ navigation }: { navigation: any }) => {
+const ConfirmCartScreen = ({ navigation, route }: { navigation: any }) => {
+  const [successModal, setSuccessModal] = useState(false);
+  const { isBooked } = route.params || {};
   return (
     <SafeAreaView style={styles.container}>
       <MobileHeader
-        title="MY CART"
-        onMenu={() => {}}
-        leftIcon={<Home size={moderateScale(24)} color="white" />}
-        onLeftPress={() => navigation.navigate('HomeScreen')}
+        // title="MY CART"
+        title={isBooked ? "BOOKED DETAILS" : "FOOD & TABLE BOOKING"}
+        onBack={() => navigation.goBack()}
+        // leftIcon={<Home size={moderateScale(24)} color="white" />}
+        // onLeftPress={() => navigation.navigate('HomeScreen')}
       />
       <View style={styles.ginghamFooterContainer}>
         <TableCloth />
@@ -187,19 +193,28 @@ const ConfirmCartScreen = ({ navigation }: { navigation: any }) => {
         showsVerticalScrollIndicator={false}
       >
         {CART_DATA.map(item => (
-          <CartItem key={item.id} item={item} />
+          <CartItem key={item.id} item={item} isDetails={isBooked} />
         ))}
       </ScrollView>
 
       {/* --- Bottom Action Buttons --- */}
-      <View style={styles.footer}>
-        <ButtonLarge
-          variant="warning"
-          title="Confirm"
-          onPress={() => navigation.navigate('CheckoutScreen')}
-          style={[Shadows.medium]}
-        />
-      </View>
+      {!isBooked && (
+        <View style={styles.footer}>
+          <ButtonLarge
+            variant="warning"
+            title="Confirm"
+            // onPress={() => navigation.navigate('CheckoutScreen')}
+            onPress={() => setSuccessModal(true)}
+            style={[Shadows.medium]}
+          />
+        </View>
+      )}
+      <OrderSuccessModal
+        orderId="45454"
+        visible={successModal}
+        onClose={() => setSuccessModal(false)}
+        forTable
+      />
     </SafeAreaView>
   );
 };

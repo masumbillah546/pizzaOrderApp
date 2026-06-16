@@ -18,3 +18,4 @@ export { default as PickupTimeScreen } from './PickupTimeScreen';
 export { default as EventsScreen } from './EventsScreen';
 export { default as AboutScreen } from './AboutScreen';
 export { default as ProductsScreen } from './ProductsScreen';
+export { default as BookingHistoryScreen } from './BookingHistoryScreen';

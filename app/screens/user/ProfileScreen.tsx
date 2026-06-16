@@ -22,7 +22,7 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* --- Header Section --- */}
-      <MobileHeader title="PROFILE" onMenu={() => {}} />
+      <MobileHeader title="PROFILE" onBack={() => navigation.goBack()} />
       <GlowingSeparator />
       <View style={styles.header}>
         <Text style={styles.headerName}>John Doe</Text>

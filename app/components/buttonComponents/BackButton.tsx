@@ -15,7 +15,7 @@ interface BackButtonProps {
 
 export default function BackButton({
   size = 40,
-  underlayColor = COLORS.primary[200],
+  underlayColor = COLORS.warning[600],
   onPress,
   style,
   color = COLORS.black,

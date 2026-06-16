@@ -26,6 +26,7 @@ interface FedilityCardScreenProps {
 const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
   purchasedCount = 7, // Extracted from "You have buy 7 Pizzas" label
   targetCount = 10, // Extracted from "Buy 10 Pizza" metric
+  navigation,
 }) => {
   const remainingCount = Math.max(0, targetCount - purchasedCount);
 
@@ -35,7 +36,7 @@ const FedilityCardScreen: React.FC<FedilityCardScreenProps> = ({
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <MobileHeader title="FEDILITY CARD" onMenu={() => {}} />
+      <MobileHeader title="FEDILITY CARD" onBack={() => navigation.goBack()}  />
       <GlowingSeparator />
 
       {/* --- HEADER BLOCK --- */}

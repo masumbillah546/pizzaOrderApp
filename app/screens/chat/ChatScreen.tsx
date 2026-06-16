@@ -40,7 +40,7 @@ const CHAT_HISTORY: ChatMessage[] = [
   },
 ];
 
-const ChatScreen = () => {
+const ChatScreen = ({ navigation }) => {
   const [inputText, setInputText] = useState('');
 
   return (
@@ -49,7 +49,7 @@ const ChatScreen = () => {
       style={styles.container}
       resizeMode="cover"
     >
-      <MobileHeader title="CHAT" onMenu={() => {}} />
+      <MobileHeader title="CHAT" onBack={() => navigation.goBack()} />
       <View
         // source={require('./assets/food_doodle_pattern.png')} // Replace with your seamless grey doodle background asset
         style={styles.chatBackground}

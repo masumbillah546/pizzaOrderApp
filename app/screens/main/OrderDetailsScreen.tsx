@@ -34,10 +34,10 @@ const ReceiptRow = ({ label, value }: ReceiptRowProps) => {
   );
 };
 
-const OrderDetailsScreen = () => {
+const OrderDetailsScreen = ({ navigation }: { navigation: any }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="ORDER DETAIL" onMenu={() => {}} />
+      <MobileHeader title="ORDER DETAIL" onBack={() => navigation.goBack()}  />
       <GlowingSeparator />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>
@@ -51,7 +51,7 @@ const OrderDetailsScreen = () => {
         showsVerticalScrollIndicator={false}
       >
         {CART_DATA.map(item => (
-          <CartItem key={item.id} item={item} />
+          <CartItem key={item.id} item={item} isDetails={true}/>
         ))}
       </ScrollView>
       <View style={styles.recieptContainer}>

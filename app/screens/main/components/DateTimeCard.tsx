@@ -29,7 +29,7 @@ const DateTimeCard = ({
   const navigation = useNavigation();
   return (
     <View
-      style={{ position: 'absolute', width: '90%', gap: verticalScale(15) }}
+      style={{ position: 'absolute', width: '85%', gap: verticalScale(15) }}
     >
       {showCartItem && (
         <Row style={styles.subTotal}>

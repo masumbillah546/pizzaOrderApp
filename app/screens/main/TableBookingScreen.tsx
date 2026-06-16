@@ -49,7 +49,7 @@ const GUEST_OPTIONS = [
   '5 People',
 ];
 
-const TableBookingScreen = () => {
+const TableBookingScreen = ({ navigation }) => {
   // Picker states tracking indices corresponding to mockup centers
   const [selectedDay, setSelectedDay] = useState('12');
   const [selectedMonth, setSelectedMonth] = useState('Aug');
@@ -77,7 +77,12 @@ const TableBookingScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* --- Top Navigation Header Bar --- */}
-      <MobileHeader title="FOOD & TABLE BOOKING" onMenu={() => {}} />
+      <MobileHeader
+        title="FOOD & TABLE BOOKING"
+        onBack={() => {
+          navigation.goBack();
+        }}
+      />
       <GlowingSeparator />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Book you table and Choose Food</Text>

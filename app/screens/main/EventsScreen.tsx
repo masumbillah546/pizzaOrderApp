@@ -66,7 +66,7 @@ interface EventsScreenProps {
   onSharePress?: (id: string) => void;
 }
 
-const EventsScreen: React.FC<EventsScreenProps> = ({ onSharePress }) => {
+const EventsScreen: React.FC<EventsScreenProps> = ({ onSharePress, navigation }) => {
   const renderEventCard = ({ item }: { item: EventItem }) => {
     return (
       <View style={styles.eventCard}>
@@ -129,7 +129,7 @@ const EventsScreen: React.FC<EventsScreenProps> = ({ onSharePress }) => {
 
   return (
     <SafeAreaView style={styles.screenContainer}>
-      <MobileHeader title="EVENTS" onMenu={() => {}} />
+      <MobileHeader title="EVENTS" onBack={() => navigation.goBack()}  />
       {/* --- Matrix Core Scrolling Canvas Layout Node --- */}
       <FlatList
         data={EVENTS_DATA}

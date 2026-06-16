@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import { moderateScale, scale, verticalScale } from '@/utils/ScreenSize';
 import { ButtonLarge, GlowingSeparator, MobileHeader } from '@/components';
 import { COLORS } from '@/constants/theme';
 import { useCartStore } from '@/stores/cartStore';
+import PaymentModal from '@/components/modals/PaymentModal';
 
 // --- Types ---
 interface CartItem {
@@ -36,7 +37,7 @@ interface CartItem {
 export const CART_DATA: CartItem[] = [
   {
     id: '1',
-    title: 'Margherita: tomato sauce',
+    name: 'Margherita: tomato sauce',
     price: '$ 10',
     quantity: 1,
     image: 'https://via.placeholder.com/150',
@@ -44,7 +45,7 @@ export const CART_DATA: CartItem[] = [
   },
   {
     id: '2',
-    title: 'Cocacola(1/2ltr)',
+    name: 'Cocacola(1/2ltr)',
     price: '$ 2',
     quantity: 1,
     image: 'https://via.placeholder.com/150',
@@ -52,7 +53,7 @@ export const CART_DATA: CartItem[] = [
   },
   {
     id: '3',
-    title: 'Cocacola(1 pag)',
+    name: 'Cocacola(1 pag)',
     price: '$ 2',
     quantity: 1,
     image: 'https://via.placeholder.com/150',
@@ -60,7 +61,7 @@ export const CART_DATA: CartItem[] = [
   },
   {
     id: '4',
-    title: 'Pizza kings',
+    name: 'Pizza kings',
     price: '$ 2',
     quantity: 1,
     image: 'https://via.placeholder.com/150',
@@ -68,7 +69,7 @@ export const CART_DATA: CartItem[] = [
   },
   {
     id: '5',
-    title: 'Margherita: tomato sauce',
+    name: 'Margherita: tomato sauce',
     price: '$ 10',
     quantity: 1,
     image: 'https://via.placeholder.com/150',
@@ -76,7 +77,13 @@ export const CART_DATA: CartItem[] = [
   },
 ];
 
-export const CartItem = ({ item }: { item: CartItem }) => {
+export const CartItem = ({
+  item,
+  isDetails = false,
+}: {
+  item: CartItem;
+  isDetails?: boolean;
+}) => {
   const removeFromCart = useCartStore(state => state.removeFromCart);
   const updateProductQuantity = useCartStore(
     state => state.updateProductQuantity,
@@ -96,12 +103,14 @@ export const CartItem = ({ item }: { item: CartItem }) => {
   return (
     <View key={item.id} style={styles.cardContainer}>
       {/* Absolute Positioned Delete Button */}
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => removeFromCart(item.id)}
-      >
-        <XCircle size={moderateScale(20)} color="#F4A472" fill="white" />
-      </TouchableOpacity>
+      {!isDetails && (
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => removeFromCart(item.id)}
+        >
+          <XCircle size={moderateScale(20)} color="#F4A472" fill="white" />
+        </TouchableOpacity>
+      )}
 
       <View style={styles.card}>
         <Image
@@ -117,54 +126,76 @@ export const CartItem = ({ item }: { item: CartItem }) => {
             {item.name}
           </Text>
           <Text style={styles.itemPrice}>
-            Price :<Text style={styles.priceBold}> {item.price}</Text>
+            Price:<Text style={styles.priceBold}> {item.price}</Text>
           </Text>
+          {isDetails && (
+            <Text style={styles.itemPrice}>
+              Quantity:<Text style={styles.priceBold}> {item.quantity}</Text>
+            </Text>
+          )}
         </View>
 
         {/* Quantity Selector & Right Tag Column */}
-        <View style={styles.rightColumn}>
-          <View style={styles.quantityRow}>
-            <TouchableOpacity
-              disabled={item.quantity === 1}
-              onPress={() => updateProductQuantity(item.id, item.quantity - 1)}
-            >
-              <MinusCircle size={moderateScale(20)} color="#7A7A7A" />
-            </TouchableOpacity>
-            <Text style={styles.quantityText}>{item.quantity}</Text>
-            <TouchableOpacity
-              onPress={() => updateProductQuantity(item.id, item.quantity + 1)}
-            >
-              <PlusCircle size={moderateScale(20)} color="#7A7A7A" />
-            </TouchableOpacity>
-          </View>
+        {!isDetails && (
+          <View style={styles.rightColumn}>
+            <View style={styles.quantityRow}>
+              <TouchableOpacity
+                disabled={item.quantity === 1}
+                onPress={() =>
+                  updateProductQuantity(item.id, item.quantity - 1)
+                }
+              >
+                <MinusCircle size={moderateScale(20)} color="#7A7A7A" />
+              </TouchableOpacity>
+              <Text style={styles.quantityText}>{item.quantity}</Text>
+              <TouchableOpacity
+                onPress={() =>
+                  updateProductQuantity(item.id, item.quantity + 1)
+                }
+              >
+                <PlusCircle size={moderateScale(20)} color="#7A7A7A" />
+              </TouchableOpacity>
+            </View>
 
-          <View style={styles.categoryBadge}>
-            {renderCategoryIcon(item.category)}
+            <View style={styles.categoryBadge}>
+              {renderCategoryIcon(item.category)}
+            </View>
           </View>
-        </View>
+        )}
       </View>
     </View>
   );
 };
 
 const CartScreen = ({ navigation }: { navigation: any }) => {
+  const [paymentModal, setShowPaymentModal] = useState(false);
+
   const products = useCartStore(state => state.products);
   const updateProductQuantity = useCartStore(
     state => state.updateProductQuantity,
   );
+
+  const subtotal = products.reduce(
+    (acc, product) => acc + Number(product.price) * Number(product.quantity),
+    0,
+  );
+
   return (
     <View style={styles.container}>
       <MobileHeader
         title="MY CART"
-        onMenu={() => {}}
-        leftIcon={<Home size={moderateScale(24)} color="white" />}
-        onLeftPress={() => navigation.navigate('HomeScreen')}
+        onBack={() => {
+          navigation.goBack();
+        }}
+        rightIcon={<Home size={moderateScale(24)} color="white" />}
+        onRightPress={() => navigation.navigate('HomeScreen')}
       />
       <GlowingSeparator />
       {/* --- Header Section --- */}
       <View style={styles.header}>
-        <Text style={styles.headerCount}>You have 4 item</Text>
-        <Text style={styles.headerCost}>Cost : $16</Text>
+        <Text style={styles.headerCount}>Order Type: Delivery</Text>
+        <Text style={styles.headerCount}>You have {products.length} item</Text>
+        <Text style={styles.headerCost}>Cost : ${subtotal}</Text>
       </View>
 
       {/* --- Cart Items List --- */}
@@ -175,10 +206,15 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
         {products.map(item => (
           <CartItem key={item.id} item={item} />
         ))}
+        {products.length === 0 && (
+          <View style={styles.emptyListContainer}>
+            <Text style={styles.emptyListText}>Your cart is empty</Text>
+          </View>
+        )}
       </ScrollView>
 
       {/* --- Bottom Action Buttons --- */}
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <ButtonLarge
           title="DELIVERY"
           onPress={() => navigation.navigate('ConfirmCartScreen')}
@@ -190,7 +226,31 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
           onPress={() => navigation.navigate('ConfirmCartScreen')}
           style={styles.actionButton}
         />
+      </View> */}
+      <View style={styles.footer}>
+        <ButtonLarge
+          title="CHECKOUT"
+          disabled={products.length === 0}
+          onPress={() => setShowPaymentModal(true)}
+          style={[
+            styles.actionButton,
+            {
+              flex: 1,
+              maxWidth: '100%',
+              opacity: products.length === 0 ? 0.7 : 1,
+            },
+          ]}
+        />
       </View>
+      <PaymentModal
+        totalPrice={subtotal}
+        visible={paymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onConfirm={() => {
+          setShowPaymentModal(false);
+          navigation.navigate('PickupTimeScreen');
+        }}
+      />
     </View>
   );
 };
@@ -205,6 +265,7 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(15),
     alignItems: 'center',
     position: 'relative',
+    gap: moderateScale(10),
   },
   headerCount: {
     color: 'white',
@@ -315,6 +376,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+  },
+  emptyListContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: scale(20),
   },
 });
 

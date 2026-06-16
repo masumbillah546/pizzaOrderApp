@@ -23,6 +23,8 @@ type MobileHeaderProps = {
   rightLabel?: string;
   leftIcon?: React.ReactNode;
   leftLabel?: string;
+  notificationIcon?: React.ReactNode;
+  onNotificationPress?: () => void;
 };
 
 export default function MobileHeader({
@@ -35,6 +37,8 @@ export default function MobileHeader({
   rightLabel,
   leftIcon,
   leftLabel,
+  notificationIcon,
+  onNotificationPress,
 }: MobileHeaderProps) {
   type NavigationProps = DrawerNavigationProp<{}>;
   const navigation = useNavigation<NavigationProps>();
@@ -47,7 +51,18 @@ export default function MobileHeader({
       ]}
     >
       <View style={styles.side}>
-        {onBack ? <BackButton onPress={onBack} /> : null}
+        {onMenu ? (
+          <Pressable
+            style={styles.iconButton}
+            onPress={() => {
+              // navigation.toggleDrawer();
+              openGlobalDrawer();
+            }}
+          >
+            <Menu size={moderateScale(20)} color={COLORS.white} />
+          </Pressable>
+        ) : null}
+        {onBack ? <BackButton onPress={onBack} color={COLORS.white} /> : null}
         {leftLabel ? (
           onLeftPress ? (
             <Pressable onPress={onLeftPress} hitSlop={8}>
@@ -59,7 +74,6 @@ export default function MobileHeader({
         ) : null}
         {leftIcon && onLeftPress ? (
           <Pressable style={styles.iconButton} onPress={onLeftPress}>
-            {/* <AppIcon source={rightIcon} size={20} tintColor="#202632" /> */}
             {leftIcon}
           </Pressable>
         ) : null}
@@ -80,23 +94,15 @@ export default function MobileHeader({
           )
         ) : null}
 
-        {rightIcon && onRightPress ? (
-          <Pressable style={styles.iconButton} onPress={onRightPress}>
-            {/* <AppIcon source={rightIcon} size={20} tintColor="#202632" /> */}
-            {rightIcon}
+        {notificationIcon && onNotificationPress ? (
+          <Pressable style={styles.iconButton} onPress={onNotificationPress}>
+            {notificationIcon}
           </Pressable>
         ) : null}
 
-        {onMenu ? (
-          <Pressable
-            style={styles.iconButton}
-            onPress={() => {
-              // navigation.toggleDrawer();
-              openGlobalDrawer();
-            }}
-          >
-            {/* <AppIcon source={uiAssets.menuIcon} size={22} tintColor="#202632" /> */}
-            <Menu size={moderateScale(20)} color={COLORS.white} />
+        {rightIcon && onRightPress ? (
+          <Pressable style={styles.iconButton} onPress={onRightPress}>
+            {rightIcon}
           </Pressable>
         ) : null}
       </View>

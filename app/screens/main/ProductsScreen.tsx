@@ -14,58 +14,62 @@ import { useSessionStore } from '@/stores/sessionStore';
 // import { DEFAULT_API_BASE_URL } from '@/config/env';
 import FlatListFooter from '@/components/flatListComponents/FlatListFooter';
 import FlatListEmptyMessage from '@/components/flatListComponents/FlatListEmptyMessage';
+import { FoodCategoriesHeader } from './HomeScreen';
 
-const Data = [
+export const ProductData = [
   {
     id: 1,
     name: 'Pizza',
     price: 100,
-    image: 'https://static.toiimg.com/thumb/56933159.cms?imgsize=686279&width=800&height=800',
+    image:
+      'https://static.toiimg.com/thumb/56933159.cms?imgsize=686279&width=800&height=800',
   },
   {
     id: 2,
     name: 'Coffee',
     price: 200,
     oldPrice: 300,
-    image: 'https://images.immediate.co.uk/production/volatile/sites/30/2022/04/Iced-Caramel-Macchiato-f4a10f9.jpg?quality=90&resize=708,643',
+    image:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2022/04/Iced-Caramel-Macchiato-f4a10f9.jpg?quality=90&resize=708,643',
   },
   {
     id: 3,
     name: 'Coke',
     price: 300,
-    image: 'https://www.eatright.org/-/media/images/unaccounted-for/hard-facts-about-soft-drinks-872739128.jpg?as=0&w=967&rev=f83dfb73834d4676912c65ba2848586c&hash=942F1CBA832CED4029AF48C5FA16CDF6',
+    image:
+      'https://www.eatright.org/-/media/images/unaccounted-for/hard-facts-about-soft-drinks-872739128.jpg?as=0&w=967&rev=f83dfb73834d4676912c65ba2848586c&hash=942F1CBA832CED4029AF48C5FA16CDF6',
   },
   {
     id: 4,
     name: 'Pizza',
     price: 100,
-    image: 'https://static.toiimg.com/thumb/56933159.cms?imgsize=686279&width=800&height=800',
+    image:
+      'https://static.toiimg.com/thumb/56933159.cms?imgsize=686279&width=800&height=800',
   },
   {
     id: 5,
     name: 'Coffee',
     price: 200,
-    image: 'https://images.immediate.co.uk/production/volatile/sites/30/2022/04/Iced-Caramel-Macchiato-f4a10f9.jpg?quality=90&resize=708,643',
+    image:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2022/04/Iced-Caramel-Macchiato-f4a10f9.jpg?quality=90&resize=708,643',
   },
   {
     id: 6,
     name: 'Coke',
     price: 300,
-    image: 'https://www.eatright.org/-/media/images/unaccounted-for/hard-facts-about-soft-drinks-872739128.jpg?as=0&w=967&rev=f83dfb73834d4676912c65ba2848586c&hash=942F1CBA832CED4029AF48C5FA16CDF6',
+    image:
+      'https://www.eatright.org/-/media/images/unaccounted-for/hard-facts-about-soft-drinks-872739128.jpg?as=0&w=967&rev=f83dfb73834d4676912c65ba2848586c&hash=942F1CBA832CED4029AF48C5FA16CDF6',
   },
-]
+];
 
-export default function ProductsScreen({
-  navigation,
-  route,
-}) {
+export default function ProductsScreen({ navigation, route }) {
   const showSearch = route.params?.showSearch ?? false;
   const categoryId = route.params?.categoryId ?? null;
   const token = useSessionStore(state => state.token);
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [data, setData] = useState(Data ?? []);
+  const [data, setData] = useState(ProductData ?? []);
   const [meta, setMeta] = useState({
     offset: 0,
     limit: 20,
@@ -100,7 +104,6 @@ export default function ProductsScreen({
         //   // Handle the response data as needed
         //   setOffset(_offset + response?.data?.length);
         //   setMeta(response?.meta ?? {});
-
         //   if (_offset === 0) {
         //     setData(response.data);
         //   } else {
@@ -162,9 +165,11 @@ export default function ProductsScreen({
       <MobileHeader
         title="All Food"
         // onBack={() => navigation.goBack()}
-        leftIcon={<CartCounter />}
-        onMenu={() => {}}
-        onLeftPress={() => navigation.navigate('CartScreen')}
+        rightIcon={<CartCounter />}
+        onBack={() => {
+          navigation.goBack();
+        }}
+        onRightPress={() => navigation.navigate('CartScreen')}
       />
       {/* {showSearch && (
         <FormField
@@ -176,6 +181,7 @@ export default function ProductsScreen({
           onChangeText={performSearch}
         />
       )} */}
+      <FoodCategoriesHeader />
       <FlatList
         data={data}
         keyExtractor={item => item.id}

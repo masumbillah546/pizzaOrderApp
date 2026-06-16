@@ -20,7 +20,7 @@ import {
 import { COLORS } from '@/constants/theme';
 import ProfilePhoto from './components/ProfilePhoto';
 
-const EditProfileScreen = () => {
+const EditProfileScreen = ({ navigation }: { navigation: any }) => {
   const [location, setLocation] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
@@ -62,7 +62,7 @@ const EditProfileScreen = () => {
           : undefined
       }
     >
-      <MobileHeader title="PROFILE EDIT" onMenu={() => {}} />
+      <MobileHeader title="PROFILE EDIT" onBack={() => navigation.goBack()} />
       <GlowingSeparator />
       {/* --- Edit Fields Form --- */}
       <ScrollView

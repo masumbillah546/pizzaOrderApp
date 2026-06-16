@@ -15,21 +15,23 @@ import { DrawerContentScrollView } from '@react-navigation/drawer';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from './Logo';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ConfirmAlert from './ConfirmAlert';
 
 const menuItems = [
-  { title: 'Main Menu', screen: 'CategoriesScreen' },
-  { title: 'Food Tracking', screen: 'OrderTrackingScreen' },
+  // { title: 'Main Menu', screen: 'CategoriesScreen' },
+  // { title: 'Food Tracking', screen: 'OrderTrackingScreen' },
   { title: 'Offer', screen: 'OfferScreen' },
-  { title: 'Order Now', screen: 'HomeScreen' },
-  { title: 'Cart', screen: 'CartScreen' },
+  // { title: 'Order Now', screen: 'HomeScreen' },
+  // { title: 'Cart', screen: 'CartScreen' },
   { title: 'Order History', screen: 'OrderHistoryScreen' },
+  { title: 'Table Booking History', screen: 'BookingHistoryScreen' },
   { title: 'Fedility Card', screen: 'FedilityCardScreen' },
-  { title: 'Messenger', screen: 'NotificationScreen' },
+  // { title: 'Messenger', screen: 'NotificationScreen' },
+  // { title: 'Food & Table Booking', screen: 'TableBookingScreen' },
   { title: 'Gallery', screen: 'GalleryScreen' },
-  { title: 'Food & Table Booking', screen: 'TableBookingScreen' },
   { title: 'Events', screen: 'EventsScreen' },
   { title: 'About', screen: 'AboutScreen' },
-  { title: 'Settings', screen: 'CoinsScreen' },
+  { title: 'Settings', screen: 'ProfileScreen' },
 ];
 
 type SideBarProps = {
@@ -46,6 +48,8 @@ type SideBarProps = {
 
 export default function SideBar(props: SideBarProps) {
   const [active, setActive] = React.useState(0);
+  const [showConfirm, setShowConfirm] = React.useState(false);
+
   const SAI = useSafeAreaInsets();
   const handleNavigation = (item: any, index: number) => {
     setActive(index);
@@ -137,6 +141,34 @@ export default function SideBar(props: SideBarProps) {
           </TouchableHighlight>
         ))}
       </DrawerContentScrollView>
+      <TouchableOpacity
+        style={styles.logout}
+        onPress={() => setShowConfirm(true)}
+      >
+        <AppText
+          style={{
+            fontSize: FontSizes.sm,
+            fontWeight: 'bold',
+            color: COLORS.white,
+          }}
+        >
+          Logout
+        </AppText>
+      </TouchableOpacity>
+      <ConfirmAlert
+        title={'Logout'}
+        message={'Are you sure you want to logout?'}
+        confirmLabel="Logout"
+        cancelLabel="Cancel"
+        visible={showConfirm}
+        onConfirm={() => {
+          setShowConfirm(false);
+          // fireAndForget(signOut());
+          // props.onLogout();
+          props.navigation.reset({ index: 0, routes: [{ name: 'Auth' }] });
+        }}
+        onCancel={() => setShowConfirm(false)}
+      />
     </LinearGradient>
   );
 }
@@ -166,5 +198,17 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.md,
     fontWeight: '700',
     textAlign: 'right',
+  },
+  logout: {
+    width: scale(200),
+    height: scale(40),
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: verticalScale(40),
+    right: scale(20),
+    borderColor: COLORS.white,
+    borderWidth: StyleSheet.hairlineWidth * 2,
+    borderRadius: scale(5),
   },
 });

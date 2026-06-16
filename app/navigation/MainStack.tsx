@@ -34,6 +34,7 @@ import {
   EventsScreen,
   AboutScreen,
   ProductsScreen,
+  BookingHistoryScreen,
 } from '@/screens';
 //
 import { COLORS, FontSizes } from '@/constants/theme';
@@ -131,6 +132,7 @@ export default function MainStack() {
       <Stack.Screen name="AboutScreen" component={AboutScreen} />
       <Stack.Screen name="OfferScreen" component={OfferScreen} />
       <Stack.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} />
+      <Stack.Screen name="BookingHistoryScreen" component={BookingHistoryScreen} />
       <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
       <Stack.Screen name="FedilityCardScreen" component={FedilityCardScreen} />
       <Stack.Screen name="CategoriesScreen" component={CategoriesScreen} />

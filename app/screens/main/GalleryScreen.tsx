@@ -63,7 +63,7 @@ const screenWidth = Dimensions.get('window').width;
 // Account for screen padding (15 * 2 = 30) and gap between items (15)
 const cardWidth = (screenWidth - scale(45)) / 2;
 
-const GalleryScreen = () => {
+const GalleryScreen = ({ navigation }: { navigation: any }) => {
   const renderGridItem = ({ item }: { item: AlbumItem }) => (
     <TouchableOpacity style={[styles.card, { width: cardWidth }]}>
       <Image
@@ -84,7 +84,7 @@ const GalleryScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MobileHeader title="SHOP GALLERY" onMenu={() => {}} />
+      <MobileHeader title="SHOP GALLERY" onBack={() => navigation.goBack()} />
       <GlowingSeparator />
       {/* --- Header Section --- */}
       <View style={styles.header}>
